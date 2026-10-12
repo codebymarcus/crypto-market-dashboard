@@ -4,12 +4,18 @@ import styles from "./CoinGrid.module.scss";
 
 type CoinGridProps = {
   coins: Coin[];
+  emptyMessage?: string;
 };
 
-export function CoinGrid({ coins }: CoinGridProps) {
+export function CoinGrid({
+  coins,
+  emptyMessage = "No cryptocurrencies available.",
+}: CoinGridProps) {
   if (coins.length === 0) {
     return (
-      <p className={styles.empty}>No cryptocurrencies match your search.</p>
+      <p className={styles.empty} role="status">
+        {emptyMessage}
+      </p>
     );
   }
 

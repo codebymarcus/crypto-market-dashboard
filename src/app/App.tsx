@@ -8,6 +8,8 @@ import {
   type SortField,
 } from "../features/coins/utils/sort-coins";
 import { CoinControls } from "../features/coins/components/CoinControls";
+import { ErrorState } from "../components/ui/ErrorState";
+import { CoinGridSkeleton } from "../features/coins/components/CoinGridSkeleton";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -30,56 +32,54 @@ function App() {
     return sortCoins(filteredCoins, sortField, sortDirection);
   }, [data, search, sortField, sortDirection]);
 
+  const header = (
+    <header className={styles.header}>
+      <div>
+        <h1 className={styles.heading}>Crypto Market Dashboard</h1>
+        <p className={styles.subtitle}>
+          Top cryptocurrencies by market capitalization.
+        </p>
+      </div>
+
+      <button
+        className={styles.refreshButton}
+        type="button"
+        onClick={() => refetch()}
+        disabled={isFetching}
+      >
+        {isFetching ? "Refreshing..." : "Refresh"}
+      </button>
+    </header>
+  );
+
   if (isPending) {
-    <main className={styles.dashboard}>
-      <h1 className={styles.heading}>Crypto Market Dashboard</h1>
-      <p role="status" className={styles.status}>
-        loading cryptocurrency data...
-      </p>
-    </main>;
+    return (
+      <main className={styles.dashboard}>
+        <h1 className={styles.heading}>Crypto Market Dashboard</h1>
+        <p role="status" className={styles.status}>
+          loading cryptocurrency data...
+        </p>
+        <CoinGridSkeleton />
+      </main>
+    );
   }
 
   if (isError && !data) {
     return (
       <main className={styles.dashboard}>
-        <h1 className={styles.heading}>Crypto Market Dashboard</h1>
-
-        <section className={styles.errorState} role="alert">
-          <h2 className={styles.errorTitle}>Unable to load market data</h2>
-
-          <p className={styles.errorMessage}>{error.message}</p>
-
-          <button
-            className={styles.refreshButton}
-            type="button"
-            onClick={() => refetch()}
-          >
-            Try again
-          </button>
-        </section>
+        {header}
+        <ErrorState
+          message={error.message}
+          onRetry={() => refetch()}
+          isRetrying={isFetching}
+        />
       </main>
     );
   }
 
   return (
     <main className={styles.dashboard}>
-      <header className={styles.header}>
-        <div>
-          <h1 className={styles.heading}>Crypto Market Dashboard</h1>
-          <p className={styles.subtitle}>
-            Top cryptocurrencies by market capitalization.
-          </p>
-        </div>
-
-        <button
-          className={styles.refreshButton}
-          type="button"
-          onClick={() => refetch()}
-          disabled={isFetching}
-        >
-          {isFetching ? "Refreshing..." : "Refresh"}
-        </button>
-      </header>
+      {header}
       {isError && (
         <p role="status" className={styles.status}>
           Market data could not be refreshed. Showing previously loaded data.
@@ -99,7 +99,14 @@ function App() {
         Showing {visibleCoins.length} of {data?.length ?? 0} coins
       </p>
 
-      <CoinGrid coins={visibleCoins} />
+      <CoinGrid
+        coins={visibleCoins}
+        emptyMessage={
+          data?.length === 0
+            ? "No market data is currently available"
+            : "No cryptocurrencies match your search. Try another name or symbol."
+        }
+      />
     </main>
   );
 }

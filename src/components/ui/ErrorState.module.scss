@@ -1,0 +1,41 @@
+.container {
+  padding: 24px;
+  border: 1px solid #fecaca;
+  border-radius: 12px;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.message {
+  margin: 0 0 16px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+.retryButton {
+  padding: 10px 16px;
+  border: 1px solid #d4d4d8;
+  border-radius: 8px;
+  background: #fff;
+  color: #18181b;
+  font-weight: 500;
+
+  &:hover:not(:disabled) {
+    background: #f4f4f5;
+  }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.6;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #6366f1;
+    outline-offset: 3px;
+  }
+}

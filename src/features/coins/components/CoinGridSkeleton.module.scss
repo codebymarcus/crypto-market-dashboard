@@ -1,0 +1,113 @@
+$skeleton-base: #e4e4e7;
+$skeleton-highlight: #f4f4f5;
+
+@keyframes shimmer {
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  min-height: 78px;
+  padding: 18px;
+  border: 1px solid #e4e4e7;
+  border-radius: 14px;
+  background: #fff;
+}
+
+.avatar,
+.name,
+.symbol,
+.priceValue,
+.change {
+  display: block;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    $skeleton-base 25%,
+    $skeleton-highlight 50%,
+    $skeleton-base 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  border-radius: 50%;
+}
+
+.info,
+.price {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.price {
+  align-items: flex-end;
+}
+
+.name {
+  width: 100px;
+  max-width: 100%;
+  height: 14px;
+}
+
+.symbol {
+  width: 42px;
+  height: 10px;
+}
+
+.priceValue {
+  width: 76px;
+  height: 14px;
+}
+
+.change {
+  width: 48px;
+  height: 10px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar,
+  .name,
+  .symbol,
+  .priceValue,
+  .change {
+    animation: none;
+    background: $skeleton-base;
+  }
+}
