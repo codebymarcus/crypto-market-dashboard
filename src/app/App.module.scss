@@ -85,6 +85,12 @@ $radius-panel: 12px;
   line-height: 1.6;
 }
 
+.resultsCount {
+  margin: 0 0 12px;
+  color: #71717a;
+  font-size: 0.85rem;
+}
+
 @media (max-width: 480px) {
   .dashboard {
     padding-block: 24px;

@@ -1,0 +1,82 @@
+$color-text: #18181b;
+$color-muted: #71717a;
+$color-border: #d4d4d8;
+$color-focus: #6366f1;
+$radius-control: 8px;
+
+.controls {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.searchGroup,
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.searchGroup {
+  flex: 1;
+  min-width: 0;
+}
+
+.sortGroup {
+  display: flex;
+  gap: 12px;
+}
+
+.field {
+  min-width: 140px;
+}
+
+.label {
+  color: $color-muted;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.searchInput,
+.select {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  border: 1px solid $color-border;
+  border-radius: $radius-control;
+  background: #fff;
+  color: $color-text;
+
+  &:focus-visible {
+    border-color: $color-focus;
+    outline: 2px solid $color-focus;
+    outline-offset: 2px;
+  }
+}
+
+.searchInput {
+  min-width: 0;
+}
+
+.select {
+  cursor: pointer;
+}
+
+@media (max-width: 640px) {
+  .controls {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sortGroup {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .field {
+    min-width: 0;
+  }
+}

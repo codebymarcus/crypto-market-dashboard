@@ -8,7 +8,9 @@ type CoinGridProps = {
 
 export function CoinGrid({ coins }: CoinGridProps) {
   if (coins.length === 0) {
-    return <p className={styles.empty}>No cryptocurrency data available.</p>;
+    return (
+      <p className={styles.empty}>No cryptocurrencies match your search.</p>
+    );
   }
 
   return (
