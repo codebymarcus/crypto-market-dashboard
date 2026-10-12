@@ -1,0 +1,108 @@
+$color-text: #18181b;
+$color-muted: #71717a;
+$color-border: #d4d4d8;
+$color-error-border: #fecaca;
+$color-error-background: #fef2f2;
+$color-error-text: #991b1b;
+
+$radius-button: 8px;
+$radius-panel: 12px;
+
+.dashboard {
+  width: min(100% - 32px, 1100px);
+  margin-inline: auto;
+  padding-block: 40px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.2;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  color: $color-muted;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.refreshButton {
+  flex-shrink: 0;
+  padding: 10px 16px;
+  border: 1px solid $color-border;
+  border-radius: $radius-button;
+  background: #fff;
+  color: $color-text;
+  font-weight: 500;
+
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease;
+
+  &:hover:not(:disabled) {
+    background: #f4f4f5;
+    border-color: #a1a1aa;
+  }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.6;
+  }
+}
+
+.status {
+  margin: 16px 0;
+  color: #52525b;
+  font-size: 0.9rem;
+}
+
+.errorState {
+  padding: 24px;
+  border: 1px solid $color-error-border;
+  border-radius: $radius-panel;
+  background: $color-error-background;
+  color: $color-error-text;
+}
+
+.errorTitle {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.errorMessage {
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+@media (max-width: 480px) {
+  .dashboard {
+    padding-block: 24px;
+  }
+
+  .header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .refreshButton {
+    padding: 9px 12px;
+    font-size: 0.875rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .refreshButton {
+    transition: none;
+  }
+}
