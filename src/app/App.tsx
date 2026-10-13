@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
+import type { Coin } from "../features/coins/types";
 import { CoinGrid } from "../features/coins/components/CoinGrid";
+import { CoinDetailView } from "../features/coins/components/CoinDetailView";
 import { useCoins } from "../features/coins/hooks/use-coins";
 import styles from "./App.module.scss";
 import {
@@ -17,6 +19,7 @@ function App() {
   const [search, setSearch] = useState("");
   const [sortField, setSortField] = useState<SortField>("price");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+  const [selectedCoin, setSelectedCoin] = useState<Coin | null>(null);
 
   const { data, error, isPending, isError, isFetching, refetch } = useCoins();
 
@@ -89,6 +92,18 @@ function App() {
     );
   }
 
+  if (selectedCoin) {
+    return (
+      <main className={styles.dashboard}>
+        {header}
+        <CoinDetailView
+          coin={selectedCoin}
+          onBack={() => setSelectedCoin(null)}
+        />
+      </main>
+    );
+  }
+
   return (
     <main className={styles.dashboard}>
       {header}
@@ -113,6 +128,7 @@ function App() {
 
       <CoinGrid
         coins={visibleCoins}
+        onCoinSelect={setSelectedCoin}
         emptyMessage={
           data?.length === 0
             ? "No market data is currently available"

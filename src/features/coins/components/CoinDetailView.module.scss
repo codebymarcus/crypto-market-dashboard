@@ -1,0 +1,112 @@
+@use "../../../styles/tools/focus" as focus;
+
+.container {
+  display: grid;
+  gap: var(--space-11);
+}
+
+.backButton {
+  justify-self: start;
+  padding: var(--space-3) 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-text);
+  cursor: pointer;
+  font: inherit;
+
+  &:hover {
+    opacity: 0.75;
+  }
+
+  @include focus.focus-ring(4px);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+
+  h1 {
+    margin: 0;
+    font-size: 1.5rem;
+  }
+
+  p {
+    margin: 0.25rem 0 0;
+    color: var(--color-text-secondary);
+  }
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+}
+
+.rank {
+  margin-left: auto;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.priceSection {
+  padding: var(--space-11);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+
+  h2 {
+    margin: var(--space-3) 0;
+    font-size: clamp(1.75rem, 5vw, 2.5rem);
+    overflow-wrap: anywhere;
+  }
+}
+
+.label {
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.positive {
+  color: var(--color-positive);
+}
+
+.negative {
+  color: var(--color-negative);
+}
+
+.neutral {
+  color: var(--color-text-secondary);
+}
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-8);
+}
+
+.statCard,
+.chartPlaceholder {
+  padding: var(--space-10);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.statCard strong {
+  display: block;
+  margin-top: var(--space-3);
+  overflow-wrap: anywhere;
+}
+
+.chartPlaceholder {
+  min-height: 220px;
+
+  h2 {
+    margin-top: 0;
+  }
+
+  p {
+    color: var(--color-text-secondary);
+  }
+}

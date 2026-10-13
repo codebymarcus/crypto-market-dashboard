@@ -1,13 +1,23 @@
 @use "../../../styles/objects/card" as card;
 @use "../../../styles/objects/grid" as grid;
 @use "../../../styles/tools/a11y" as a11y;
+@use "../../../styles/tools/focus" as focus;
 
 .list {
   @include grid.coin-grid;
 }
 
+.item {
+  display: flex;
+}
+
 .card {
   @include card.card-surface;
+  width: 100%;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   box-shadow: 0 1px 2px var(--shadow-card);
   transition:
     border-color var(--duration-fast) var(--ease-default),
@@ -17,6 +27,8 @@
     border-color: var(--color-border-strong);
     box-shadow: 0 4px 12px var(--shadow-card-hover);
   }
+
+  @include focus.focus-ring;
 }
 
 .image {

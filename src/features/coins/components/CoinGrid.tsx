@@ -4,11 +4,13 @@ import styles from "./CoinGrid.module.scss";
 
 type CoinGridProps = {
   coins: Coin[];
+  onCoinSelect: (coin: Coin) => void;
   emptyMessage?: string;
 };
 
 export function CoinGrid({
   coins,
+  onCoinSelect,
   emptyMessage = "No cryptocurrencies available.",
 }: CoinGridProps) {
   if (coins.length === 0) {
@@ -32,31 +34,39 @@ export function CoinGrid({
               : styles.negative;
 
         return (
-          <li className={styles.card} key={coin.id}>
-            <img
-              src={coin.image}
-              alt={`${coin.name} logo`}
-              width={40}
-              height={40}
-              className={styles.image}
-            />
+          <li className={styles.item} key={coin.id}>
+            <button
+              type="button"
+              className={styles.card}
+              onClick={() => onCoinSelect(coin)}
+            >
+              <img
+                src={coin.image}
+                alt={`${coin.name} logo`}
+                width={40}
+                height={40}
+                className={styles.image}
+              />
 
-            <div className={styles.info}>
-              <strong className={styles.name}>{coin.name}</strong>
-              <span className={styles.symbol}>{coin.symbol.toUpperCase()}</span>
-            </div>
+              <div className={styles.info}>
+                <strong className={styles.name}>{coin.name}</strong>
+                <span className={styles.symbol}>
+                  {coin.symbol.toUpperCase()}
+                </span>
+              </div>
 
-            <div className={styles.price}>
-              <strong className={styles.priceValue}>
-                {formatPrice(coin.current_price)}
-              </strong>
+              <div className={styles.price}>
+                <strong className={styles.priceValue}>
+                  {formatPrice(coin.current_price)}
+                </strong>
 
-              <span className={`${styles.change} ${changeClass}`}>
-                {change === null
-                  ? "N/A"
-                  : `${change >= 0 ? "+" : ""}${change.toFixed(2)}`}
-              </span>
-            </div>
+                <span className={`${styles.change} ${changeClass}`}>
+                  {change === null
+                    ? "N/A"
+                    : `${change >= 0 ? "+" : ""}${change.toFixed(2)}`}
+                </span>
+              </div>
+            </button>
           </li>
         );
       })}
