@@ -1,6 +1,7 @@
 @use "../styles/settings/breakpoints" as bp;
 @use "../styles/tools/media" as media;
 @use "../styles/tools/a11y" as a11y;
+@use "../styles/objects/button" as button;
 
 .headerActions {
   display: flex;
@@ -46,28 +47,16 @@
 }
 
 .refreshButton {
+  @include button.button-secondary;
   flex-shrink: 0;
   padding: var(--space-5) var(--space-8);
-  border: 1px solid;
-  border-color: var(--color-border-strong);
-
-  border-radius: var(--radius-sm);
-  background: var(--color-surface);
-  color: var(--color-text);
-  font-weight: 500;
 
   transition:
     background-color var(--duration-fast) var(--ease-default),
     border-color var(--duration-fast) var(--ease-default);
 
   &:hover:not(:disabled) {
-    background: var(--color-surface-hover);
     border-color: var(--color-text-secondary);
-  }
-
-  &:disabled {
-    cursor: wait;
-    opacity: 0.6;
   }
 }
 
