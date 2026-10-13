@@ -13,18 +13,18 @@
   gap: 14px;
   min-width: 0;
   padding: 18px;
-  border: 1px solid #e4e4e7;
+  border: 1px solid var(--color-border);
   border-radius: 14px;
-  background: #fff;
-  box-shadow: 0 1px 2px rgb(0 0 0 / 3%);
+  background: var(--color-surface);
+  box-shadow: 0 1px 2px var(--shadow-card);
   transition:
     border-color 150ms ease,
     box-shadow 150ms ease;
-}
 
-.card:hover {
-  border-color: #c4c4cc;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 5%);
+  &:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: 0 4px 12px var(--shadow-card-hover);
+  }
 }
 
 .image {
@@ -44,7 +44,7 @@
 
 .name {
   overflow: hidden;
-  color: #18181b;
+  color: var(--color-text);
   font-size: 0.95rem;
   font-weight: 600;
   text-overflow: ellipsis;
@@ -52,7 +52,7 @@
 }
 
 .symbol {
-  color: #71717a;
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   text-transform: uppercase;
 }
@@ -67,7 +67,7 @@
 }
 
 .priceValue {
-  color: #18181b;
+  color: var(--color-text);
   font-size: 0.95rem;
   font-weight: 600;
   font-variant-numeric: tabular-nums;
@@ -81,22 +81,22 @@
 }
 
 .positive {
-  color: #15803d;
+  color: var(--color-positive);
 }
 
 .negative {
-  color: #dc2626;
+  color: var(--color-negative);
 }
 
 .neutral {
-  color: #71717a;
+  color: var(--color-text-secondary);
 }
 
 .empty {
   padding: 32px 16px;
-  border: 1px dashed #d4d4d8;
+  border: 1px dashed var(--color-border-strong);
   border-radius: 12px;
-  color: #71717a;
+  color: var(--color-text-secondary);
   text-align: center;
 }
 

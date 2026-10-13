@@ -1,5 +1,4 @@
-$skeleton-base: #e4e4e7;
-$skeleton-highlight: #f4f4f5;
+$animation-duration: 1.5s;
 
 @keyframes shimmer {
   100% {
@@ -35,9 +34,9 @@ $skeleton-highlight: #f4f4f5;
   min-width: 0;
   min-height: 78px;
   padding: 18px;
-  border: 1px solid #e4e4e7;
+  border: 1px solid var(--color-border);
   border-radius: 14px;
-  background: #fff;
+  background: var(--color-surface);
 }
 
 .avatar,
@@ -49,12 +48,12 @@ $skeleton-highlight: #f4f4f5;
   border-radius: 6px;
   background: linear-gradient(
     90deg,
-    $skeleton-base 25%,
-    $skeleton-highlight 50%,
-    $skeleton-base 75%
+    var(--color-skeleton) 25%,
+    var(--color-skeleton-highlight) 50%,
+    var(--color-skeleton) 75%
   );
   background-size: 200% 100%;
-  animation: shimmer 1.5s infinite linear;
+  animation: shimmer $animation-duration infinite linear;
 }
 
 .avatar {
@@ -108,6 +107,6 @@ $skeleton-highlight: #f4f4f5;
   .priceValue,
   .change {
     animation: none;
-    background: $skeleton-base;
+    background: var(--color-skeleton);
   }
 }

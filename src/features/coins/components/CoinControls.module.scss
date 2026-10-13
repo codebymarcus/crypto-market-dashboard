@@ -1,7 +1,3 @@
-$color-text: #18181b;
-$color-muted: #71717a;
-$color-border: #d4d4d8;
-$color-focus: #6366f1;
 $radius-control: 8px;
 
 .controls {
@@ -34,7 +30,7 @@ $radius-control: 8px;
 }
 
 .label {
-  color: $color-muted;
+  color: var(--color-text-secondary);
   font-size: 0.8rem;
   font-weight: 600;
 }
@@ -44,14 +40,18 @@ $radius-control: 8px;
   width: 100%;
   min-height: 42px;
   padding: 10px 12px;
-  border: 1px solid $color-border;
+  border: 1px solid var(--color-border-strong);
   border-radius: $radius-control;
-  background: #fff;
-  color: $color-text;
+  background: var(--color-surface);
+  color: var(--color-text);
+
+  &::placeholder {
+    color: var(--color-text-secondary);
+  }
 
   &:focus-visible {
-    border-color: $color-focus;
-    outline: 2px solid $color-focus;
+    border-color: var(--color-focus);
+    outline: 2px solid var(--color-focus);
     outline-offset: 2px;
   }
 }
