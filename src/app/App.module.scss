@@ -1,17 +1,18 @@
-$radius-button: 8px;
-$radius-panel: 12px;
+@use "../styles/settings/breakpoints" as bp;
+@use "../styles/tools/media" as media;
+@use "../styles/tools/a11y" as a11y;
 
 .headerActions {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-5);
   flex-shrink: 0;
 }
 
 .dashboard {
-  width: min(100% - 32px, 1100px);
+  width: min(100% - var(--space-13), 1100px);
   margin-inline: auto;
-  padding-block: 40px;
+  padding-block: var(--space-14);
   background: var(--color-background);
   color: var(--color-text);
 }
@@ -26,8 +27,8 @@ $radius-panel: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  margin-bottom: 28px;
+  gap: var(--space-11);
+  margin-bottom: var(--space-12);
 }
 
 .heading {
@@ -39,25 +40,25 @@ $radius-panel: 12px;
 }
 
 .subtitle {
-  margin: 8px 0 0;
+  margin: var(--space-3) 0 0;
   font-size: 0.95rem;
   line-height: 1.5;
 }
 
 .refreshButton {
   flex-shrink: 0;
-  padding: 10px 16px;
+  padding: var(--space-5) var(--space-8);
   border: 1px solid;
   border-color: var(--color-border-strong);
 
-  border-radius: $radius-button;
+  border-radius: var(--radius-sm);
   background: var(--color-surface);
   color: var(--color-text);
   font-weight: 500;
 
   transition:
-    background-color 150ms ease,
-    border-color 150ms ease;
+    background-color var(--duration-fast) var(--ease-default),
+    border-color var(--duration-fast) var(--ease-default);
 
   &:hover:not(:disabled) {
     background: var(--color-surface-hover);
@@ -71,50 +72,32 @@ $radius-panel: 12px;
 }
 
 .status {
-  margin: 16px 0;
+  margin: var(--space-8) 0;
   font-size: 0.9rem;
 }
 
-.errorState {
-  padding: 24px;
-  border: 1px solid var(--color-error-border);
-  border-radius: $radius-panel;
-  background: var(--color-error-background);
-  color: var(--color-error-text);
-}
-
-.errorTitle {
-  margin: 0 0 8px;
-  font-size: 1.1rem;
-}
-
-.errorMessage {
-  margin: 0 0 16px;
-  line-height: 1.6;
-}
-
 .resultsCount {
-  margin: 0 0 12px;
+  margin: 0 0 var(--space-6);
   font-size: 0.85rem;
 }
 
-@media (max-width: 480px) {
+@include media.until(bp.$bp-toolbar) {
   .dashboard {
-    padding-block: 24px;
+    padding-block: var(--space-11);
   }
 
   .header {
     align-items: flex-start;
-    gap: 12px;
+    gap: var(--space-6);
   }
 
   .refreshButton {
-    padding: 9px 12px;
+    padding: var(--space-4) var(--space-6);
     font-size: 0.875rem;
   }
 }
 
-@media (prefers-reduced-motion: reduce) {
+@include a11y.reduced-motion {
   .refreshButton {
     transition: none;
   }

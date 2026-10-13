@@ -1,0 +1,20 @@
+/* Values inherited verbatim from the current styles, so this step is
+   visually identical. The scale is deliberately granular because today's
+   spacing isn't on a uniform grid; consolidating near-duplicates
+   (5/7/9, 10-vs-12, etc.) is a visible change left for a later pass. */
+:root {
+  --space-1: 5px;
+  --space-2: 7px;
+  --space-3: 8px;
+  --space-4: 9px;
+  --space-5: 10px;
+  --space-6: 12px;
+  --space-7: 14px;
+  --space-8: 16px;
+  --space-9: 18px;
+  --space-10: 20px;
+  --space-11: 24px;
+  --space-12: 28px;
+  --space-13: 32px;
+  --space-14: 40px;
+}

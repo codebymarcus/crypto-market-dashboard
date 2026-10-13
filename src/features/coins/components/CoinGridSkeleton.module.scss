@@ -1,4 +1,6 @@
-$animation-duration: 1.5s;
+@use "../../../styles/settings/breakpoints" as bp;
+@use "../../../styles/tools/media" as media;
+@use "../../../styles/tools/a11y" as a11y;
 
 @keyframes shimmer {
   100% {
@@ -9,20 +11,20 @@ $animation-duration: 1.5s;
 .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: var(--space-6);
   margin: 0;
   padding: 0;
   list-style: none;
 
-  @media (min-width: 600px) {
+  @include media.from(bp.$bp-grid-sm) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  @media (min-width: 900px) {
+  @include media.from(bp.$bp-grid-md) {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
-  @media (min-width: 1200px) {
+  @include media.from(bp.$bp-grid-lg) {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 }
@@ -30,12 +32,12 @@ $animation-duration: 1.5s;
 .card {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: var(--space-7);
   min-width: 0;
   min-height: 78px;
-  padding: 18px;
+  padding: var(--space-9);
   border: 1px solid var(--color-border);
-  border-radius: 14px;
+  border-radius: var(--radius-lg);
   background: var(--color-surface);
 }
 
@@ -45,7 +47,7 @@ $animation-duration: 1.5s;
 .priceValue,
 .change {
   display: block;
-  border-radius: 6px;
+  border-radius: var(--radius-xs);
   background: linear-gradient(
     90deg,
     var(--color-skeleton) 25%,
@@ -53,7 +55,7 @@ $animation-duration: 1.5s;
     var(--color-skeleton) 75%
   );
   background-size: 200% 100%;
-  animation: shimmer $animation-duration infinite linear;
+  animation: shimmer var(--duration-shimmer) infinite var(--ease-linear);
 }
 
 .avatar {
@@ -67,7 +69,7 @@ $animation-duration: 1.5s;
 .price {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--space-3);
 }
 
 .info {
@@ -100,7 +102,7 @@ $animation-duration: 1.5s;
   height: 10px;
 }
 
-@media (prefers-reduced-motion: reduce) {
+@include a11y.reduced-motion {
   .avatar,
   .name,
   .symbol,

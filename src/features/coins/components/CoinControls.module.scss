@@ -1,18 +1,20 @@
-$radius-control: 8px;
+@use "../../../styles/settings/breakpoints" as bp;
+@use "../../../styles/tools/media" as media;
+@use "../../../styles/tools/focus" as focus;
 
 .controls {
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
+  gap: var(--space-10);
+  margin-bottom: var(--space-11);
 }
 
 .searchGroup,
 .field {
   display: flex;
   flex-direction: column;
-  gap: 7px;
+  gap: var(--space-2);
 }
 
 .searchGroup {
@@ -22,7 +24,7 @@ $radius-control: 8px;
 
 .sortGroup {
   display: flex;
-  gap: 12px;
+  gap: var(--space-6);
 }
 
 .field {
@@ -39,9 +41,9 @@ $radius-control: 8px;
 .select {
   width: 100%;
   min-height: 42px;
-  padding: 10px 12px;
+  padding: var(--space-5) var(--space-6);
   border: 1px solid var(--color-border-strong);
-  border-radius: $radius-control;
+  border-radius: var(--radius-sm);
   background: var(--color-surface);
   color: var(--color-text);
 
@@ -49,10 +51,8 @@ $radius-control: 8px;
     color: var(--color-text-secondary);
   }
 
-  &:focus-visible {
+  @include focus.focus-ring(2px) {
     border-color: var(--color-focus);
-    outline: 2px solid var(--color-focus);
-    outline-offset: 2px;
   }
 }
 
@@ -64,11 +64,11 @@ $radius-control: 8px;
   cursor: pointer;
 }
 
-@media (max-width: 640px) {
+@include media.until(bp.$bp-controls) {
   .controls {
     align-items: stretch;
     flex-direction: column;
-    gap: 16px;
+    gap: var(--space-8);
   }
 
   .sortGroup {

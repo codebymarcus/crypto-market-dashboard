@@ -1,4 +1,7 @@
-@use "./styles/theme";
+@use "./styles/settings/theme";
+@use "./styles/settings/spacing";
+@use "./styles/settings/radii";
+@use "./styles/settings/motion";
 
 :root {
   font-family:
@@ -34,8 +37,8 @@ body {
   color: var(--color-text);
 
   transition:
-    background-color 180ms ease,
-    color 180ms ease;
+    background-color var(--duration-theme) var(--ease-default),
+    color var(--duration-theme) var(--ease-default);
 }
 
 button,
