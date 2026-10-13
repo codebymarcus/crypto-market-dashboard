@@ -1,75 +1,83 @@
-# React + TypeScript + Vite
+# Crypto Market Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A single-page dashboard that lists the top 20 cryptocurrencies by market
+capitalization, with client-side search, sorting, and a light/dark theme.
+Market data is fetched live from the public [CoinGecko API](https://www.coingecko.com/en/api)
 
-Currently, two official plugins are available:
+- no API key or account required.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- **Live market data** - top 20 coins by market cap (USD) from CoinGecko.
+- **Search** - filter coins by name or symbol as you type.
+- **Sort** - order by current price or 24h change, highest or lowest first.
+- **Light / dark theme** - defaults to light; the toggle choice persists across reloads and is applied before first paint (no flash of the wrong theme).
+- **Resilient UX** - loading skeletons, an error state with retry, and automatic refetch on reconnect / window focus.
+- **Accessible** - keyboard focus rings, `prefers-reduced-motion` support, and semantic roles.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech stack
 
-## Expanding the ESLint configuration
+| Concern       | Choice                                                                                           |
+| ------------- | ------------------------------------------------------------------------------------------------ |
+| Framework     | React 19 + TypeScript                                                                            |
+| Build tool    | Vite 8                                                                                           |
+| Data fetching | TanStack Query (React Query)                                                                     |
+| Client state  | Zustand (persisted theme preference); search & sort are local component state                                                               |
+| Styling       | Sass + CSS Modules, organised in ITCSS-informed layers (see `docs/css-architecture-proposal.md`) |
+| Testing       | Vitest + Testing Library                                                                         |
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Prerequisites
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+- **Node.js** 20.19+ or 22.12+ (required by Vite 8)
+- **npm** (bundled with Node). Any package manager works; examples below use npm.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Getting started
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+# 1. Install dependencies
+npm install
 
+# 2. Start the dev server (http://localhost:5173)
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+Open the URL printed in the terminal (default `http://localhost:5173`; Vite
+picks the next free port if 5173 is taken). The app loads market data on
+start - no environment variables or secrets to configure.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Available scripts
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Command            | What it does                                                      |
+| ------------------ | ----------------------------------------------------------------- |
+| `npm run dev`      | Start the Vite dev server with hot-module reload.                 |
+| `npm run build`    | Type-check (`tsc -b`) and build a production bundle into `dist/`. |
+| `npm run preview`  | Serve the built `dist/` locally to preview the production build.  |
+| `npm test`         | Run the Vitest suite in watch mode.                               |
+| `npm run test:run` | Run the Vitest suite once (CI mode).                              |
+| `npm run lint`     | Lint the project with ESLint.                                     |
+
+## Project structure
 
 ```
+src/
+  app/                    # App shell, providers, root component
+  components/ui/          # Shared UI (ErrorState, ThemeToggle)
+  features/coins/         # Coin feature: API, hooks, components, utils, types
+  lib/                    # Query client setup
+  stores/                 # Zustand preferences store
+  styles/                 # Global style layers (settings, tools, generic, elements, objects)
+  index.scss              # Global style entry (imports the layers above)
+  main.tsx                # App entry point
+```
+
+## Notes
+
+- Market data comes from CoinGecko's public rate-limited endpoint; if the grid
+  fails to load, wait a moment and use **Retry** (occasional `429` responses are
+  expected under heavy use).
+- The styling layer follows an ITCSS-informed architecture that keeps CSS
+  Modules for component scoping. See
+  [`docs/styles-architecture.md`](docs/styles-architecture.md) for the developer
+  guide (tokens, mixins, conventions, and a cookbook), and
+  [`docs/css-architecture-proposal.md`](docs/css-architecture-proposal.md) for
+  the rationale behind it.
