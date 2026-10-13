@@ -1,0 +1,51 @@
+@use "../tools/focus" as focus;
+@use "../tools/a11y" as a11y;
+
+:root {
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-optical-sizing: auto;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  margin: 0;
+  background: var(--color-background);
+  color: var(--color-text);
+
+  transition:
+    background-color var(--duration-theme) var(--ease-default),
+    color var(--duration-theme) var(--ease-default);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button,
+input,
+select {
+  @include focus.focus-ring;
+}
+
+@include a11y.reduced-motion {
+  body {
+    transition: none;
+  }
+}
