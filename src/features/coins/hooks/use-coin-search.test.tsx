@@ -83,4 +83,59 @@ describe("useCoinSearch", () => {
     await waitFor(() => expect(result.current.isPending).toBe(false));
     expect(result.current.coins).toEqual([]);
   });
+
+  it("clears results when a search is refined to zero matches", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: RequestInfo | URL) => {
+        const url = String(input);
+        let body: unknown;
+        if (url.includes("/search")) {
+          body = url.includes("query=bitcoin")
+            ? {
+                coins: [
+                  {
+                    id: "bitcoin",
+                    name: "Bitcoin",
+                    symbol: "BTC",
+                    market_cap_rank: 1,
+                  },
+                ],
+              }
+            : { coins: [] };
+        } else {
+          body = [
+            {
+              id: "bitcoin",
+              symbol: "btc",
+              name: "Bitcoin",
+              image: "https://example.com/bitcoin.png",
+              current_price: 60000,
+              market_cap: 1_000_000,
+              market_cap_rank: 1,
+              price_change_percentage_24h: 2,
+            },
+          ];
+        }
+        return Promise.resolve(
+          new Response(JSON.stringify(body), {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+          }),
+        );
+      }),
+    );
+
+    const { result, rerender } = renderHook(
+      ({ query }) => useCoinSearch(query),
+      { wrapper: createWrapper(), initialProps: { query: "bitcoin" } },
+    );
+
+    await waitFor(() => expect(result.current.coins).toHaveLength(1));
+
+    rerender({ query: "zzzz" });
+
+    await waitFor(() => expect(result.current.coins).toEqual([]));
+    expect(result.current.isPending).toBe(false);
+  });
 });

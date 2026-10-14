@@ -48,7 +48,7 @@ export function useCoinSearch(query: string): CoinListState {
     (searchQuery.isPending || marketsQuery.isPending);
 
   return {
-    coins: marketsQuery.data ?? [],
+    coins: hasNoResults ? [] : (marketsQuery.data ?? []),
     isPending,
     isError: searchQuery.isError || marketsQuery.isError,
     error: searchQuery.error ?? marketsQuery.error ?? null,
