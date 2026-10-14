@@ -75,12 +75,12 @@ src/
 
 ```scss
 // src/index.scss
-@use "./styles/settings/theme";
-@use "./styles/settings/spacing";
-@use "./styles/settings/radii";
-@use "./styles/settings/motion";
-@use "./styles/generic/reset";
-@use "./styles/elements/base";
+@use "styles/settings/theme";
+@use "styles/settings/spacing";
+@use "styles/settings/radii";
+@use "styles/settings/motion";
+@use "styles/generic/reset";
+@use "styles/elements/base";
 ```
 
 Tokens that emit CSS (everything except `_breakpoints.scss`) are loaded here so
@@ -219,8 +219,8 @@ Mixins emit nothing until a component `@include`s them.
 Usage - always pass a breakpoint token, never a literal:
 
 ```scss
-@use "../../../styles/settings/breakpoints" as bp;
-@use "../../../styles/tools/media" as media;
+@use "styles/settings/breakpoints" as bp;
+@use "styles/tools/media" as media;
 
 .list {
   grid-template-columns: 1fr;
@@ -253,7 +253,7 @@ the block body (`@content`).
 ```
 
 ```scss
-@use "../../styles/tools/focus" as focus;
+@use "styles/tools/focus" as focus;
 
 .toggle {
   @include focus.focus-ring; // default 3px offset
@@ -278,7 +278,7 @@ the block body (`@content`).
 ```
 
 ```scss
-@use "../../../styles/tools/a11y" as a11y;
+@use "styles/tools/a11y" as a11y;
 
 @include a11y.reduced-motion {
   .card {
@@ -328,7 +328,7 @@ Consumed by both the live card and the skeleton card:
 
 ```scss
 // CoinGrid.module.scss
-@use "../../../styles/objects/card" as card;
+@use "styles/objects/card" as card;
 
 .card {
   @include card.card-surface;
@@ -352,8 +352,8 @@ Consumed by both the live card and the skeleton card:
 The responsive 1 → 2 → 3 → 4 column grid, breakpoints included:
 
 ```scss
-@use "../settings/breakpoints" as bp;
-@use "../tools/media" as media;
+@use "styles/settings/breakpoints" as bp;
+@use "styles/tools/media" as media;
 
 @mixin coin-grid {
   display: grid;
@@ -376,7 +376,7 @@ The responsive 1 → 2 → 3 → 4 column grid, breakpoints included:
 ```
 
 ```scss
-@use "../../../styles/objects/grid" as grid;
+@use "styles/objects/grid" as grid;
 
 .list {
   @include grid.coin-grid;
@@ -389,7 +389,7 @@ The shared secondary-button surface: border, fill, text, hover, disabled, and
 focus. Callers add their own **padding / layout / transition**.
 
 ```scss
-@use "../tools/focus" as focus;
+@use "styles/tools/focus" as focus;
 
 @mixin button-secondary {
   border: 1px solid var(--color-border-strong);
@@ -412,7 +412,7 @@ focus. Callers add their own **padding / layout / transition**.
 
 ```scss
 // ErrorState.module.scss - minimal
-@use "../../styles/objects/button" as button;
+@use "styles/objects/button" as button;
 
 .retryButton {
   @include button.button-secondary;
@@ -450,13 +450,19 @@ Component modules are ordinary `*.module.scss` files co-located with their
 
 ### `@use` path reference
 
-Paths are relative to the component file:
+Reference any global layer by a **bare `styles/<layer>/<name>` path, from any file
+at any depth** — never a `../../../styles/` chain:
 
-| Component location                            | Prefix to `src/styles/` |
-| --------------------------------------------- | ----------------------- |
-| `src/app/*.module.scss`                       | `../styles/`            |
-| `src/components/ui/*.module.scss`             | `../../styles/`         |
-| `src/features/coins/components/*.module.scss` | `../../../styles/`      |
+```scss
+@use "styles/objects/card" as card;
+@use "styles/tools/focus" as focus;
+```
+
+This works because Vite adds `src/` to Sass's `loadPaths`
+(`css.preprocessorOptions.scss.loadPaths` in `vite.config.ts`), so Sass resolves a
+bare `styles/…` path from the `src` root. The partials inside `src/styles/` reference
+their siblings the same way (`@use "styles/tools/focus"`), so there is one rule
+everywhere.
 
 Namespace imports (`@use "…" as x`) keep call sites readable: `bp.$bp-grid-sm`,
 `media.from(...)`, `button.button-secondary`.
@@ -512,8 +518,8 @@ $bp-wide: 1440px;
 ```
 
 ```scss
-@use "../../../styles/settings/breakpoints" as bp;
-@use "../../../styles/tools/media" as media;
+@use "styles/settings/breakpoints" as bp;
+@use "styles/tools/media" as media;
 
 .list {
   @include media.from(bp.$bp-wide) {
@@ -540,8 +546,8 @@ Add the token to **both** blocks in `settings/_theme.scss` so it switches:
 
 ```scss
 // src/features/alerts/components/AlertBanner.module.scss
-@use "../../../styles/tools/a11y" as a11y;
-@use "../../../styles/tools/focus" as focus;
+@use "styles/tools/a11y" as a11y;
+@use "styles/tools/focus" as focus;
 
 .banner {
   display: flex;
@@ -573,7 +579,7 @@ import styles from "./AlertBanner.module.scss";
 ### Reuse the card or grid
 
 ```scss
-@use "../../../styles/objects/card" as card;
+@use "styles/objects/card" as card;
 
 .tile {
   @include card.card-surface;

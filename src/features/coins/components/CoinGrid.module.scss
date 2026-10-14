@@ -1,7 +1,7 @@
-@use "../../../styles/objects/card" as card;
-@use "../../../styles/objects/grid" as grid;
-@use "../../../styles/tools/a11y" as a11y;
-@use "../../../styles/tools/focus" as focus;
+@use "styles/objects/card" as card;
+@use "styles/objects/grid" as grid;
+@use "styles/tools/a11y" as a11y;
+@use "styles/tools/focus" as focus;
 
 .list {
   @include grid.coin-grid;

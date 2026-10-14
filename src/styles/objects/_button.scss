@@ -1,4 +1,4 @@
-@use "../tools/focus" as focus;
+@use "styles/tools/focus" as focus;
 
 // Shared secondary-button surface. Callers add their own padding / layout /
 // transition; this covers border, fill, text, hover, disabled and focus.

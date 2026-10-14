@@ -1,5 +1,5 @@
-@use "../tools/focus" as focus;
-@use "../tools/a11y" as a11y;
+@use "styles/tools/focus" as focus;
+@use "styles/tools/a11y" as a11y;
 
 :root {
   font-family:

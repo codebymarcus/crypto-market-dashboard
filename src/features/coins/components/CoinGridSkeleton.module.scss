@@ -1,6 +1,6 @@
-@use "../../../styles/objects/card" as card;
-@use "../../../styles/objects/grid" as grid;
-@use "../../../styles/tools/a11y" as a11y;
+@use "styles/objects/card" as card;
+@use "styles/objects/grid" as grid;
+@use "styles/tools/a11y" as a11y;
 
 @keyframes shimmer {
   100% {

@@ -1,6 +1,6 @@
-@use "../../../styles/settings/breakpoints" as bp;
-@use "../../../styles/tools/media" as media;
-@use "../../../styles/tools/focus" as focus;
+@use "styles/settings/breakpoints" as bp;
+@use "styles/tools/media" as media;
+@use "styles/tools/focus" as focus;
 
 .controls {
   display: flex;

@@ -1,5 +1,5 @@
-@use "../settings/breakpoints" as bp;
-@use "../tools/media" as media;
+@use "styles/settings/breakpoints" as bp;
+@use "styles/tools/media" as media;
 
 // Responsive coin grid: 1 -> 2 -> 3 -> 4 columns.
 @mixin coin-grid {

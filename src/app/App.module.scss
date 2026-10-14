@@ -1,7 +1,7 @@
-@use "../styles/settings/breakpoints" as bp;
-@use "../styles/tools/media" as media;
-@use "../styles/tools/a11y" as a11y;
-@use "../styles/objects/button" as button;
+@use "styles/settings/breakpoints" as bp;
+@use "styles/tools/media" as media;
+@use "styles/tools/a11y" as a11y;
+@use "styles/objects/button" as button;
 
 .headerActions {
   display: flex;
