@@ -8,3 +8,12 @@ export interface Coin {
   market_cap_rank: number;
   price_change_percentage_24h: number | null;
 }
+
+export type ChartPeriod = 1 | 7 | 30;
+export type HistoricalDataPoint = [timestamp: number, value: number];
+
+export interface MarketChart {
+  prices: HistoricalDataPoint[];
+  market_caps: HistoricalDataPoint[];
+  total_volumes: HistoricalDataPoint[];
+}

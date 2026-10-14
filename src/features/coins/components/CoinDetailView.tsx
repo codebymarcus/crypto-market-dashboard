@@ -1,4 +1,9 @@
-import type { Coin } from "../types";
+import { useState } from "react";
+import type { ChartPeriod, Coin } from "../types";
+import { useMarketChart } from "../hooks/use-market-chart";
+import { ChartPeriodSelector } from "./ChartPeriodSelector";
+import { PriceChart } from "./PriceChart";
+import { ErrorState } from "../../../components/ui/ErrorState";
 import styles from "./CoinDetailView.module.scss";
 
 interface CoinDetailViewProps {
@@ -8,6 +13,16 @@ interface CoinDetailViewProps {
 
 export function CoinDetailView({ coin, onBack }: CoinDetailViewProps) {
   const change = coin.price_change_percentage_24h;
+  const [period, setPeriod] = useState<ChartPeriod>(7);
+
+  const {
+    data: chart,
+    isPending: isChartPending,
+    isError: isChartError,
+    error: chartError,
+    refetch: refetchChart,
+    isFetching: isChartFetching,
+  } = useMarketChart(coin.id, period);
 
   return (
     <section className={styles.container}>
@@ -66,9 +81,32 @@ export function CoinDetailView({ coin, onBack }: CoinDetailViewProps) {
         </article>
       </section>
 
-      <section className={styles.chartPlaceholder}>
-        <h2>Price history</h2>
-        <p>Historical price chart will be implemented in the next step.</p>
+      <section className={styles.chartSection}>
+        <header className={styles.chartHeader}>
+          <h2>Price history</h2>
+          <ChartPeriodSelector value={period} onChange={setPeriod} />
+        </header>
+
+        {isChartPending ? (
+          <div
+            className={styles.chartSkeleton}
+            role="status"
+            aria-label="Loading price history"
+          />
+        ) : isChartError ? (
+          <ErrorState
+            title="Unable to load price history."
+            message={chartError.message}
+            onRetry={() => refetchChart()}
+            isRetrying={isChartFetching}
+          />
+        ) : chart.prices.length === 0 ? (
+          <p className={styles.placeholderText}>
+            No price history is available for this period.
+          </p>
+        ) : (
+          <PriceChart prices={chart.prices} period={period} />
+        )}
       </section>
     </section>
   );

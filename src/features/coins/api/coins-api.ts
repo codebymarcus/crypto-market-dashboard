@@ -1,4 +1,5 @@
 import type { Coin } from "../types";
+import { isAbortError } from "./is-abort-error";
 
 const COINS_API_URL = "https://api.coingecko.com/api/v3/coins/markets";
 
@@ -51,7 +52,7 @@ export async function fetchCoins(signal?: AbortSignal): Promise<Coin[]> {
   try {
     response = await fetch(url, { signal });
   } catch (error) {
-    if (error instanceof Error && error.name === "AbortError") {
+    if (isAbortError(error)) {
       throw error;
     }
 
@@ -73,7 +74,7 @@ export async function fetchCoins(signal?: AbortSignal): Promise<Coin[]> {
 
   try {
     data = await response.json();
-  } catch (error) {
+  } catch {
     throw new CoinsApiError(
       "CoinGecko returned an invalid JSON response.",
       response.status,
