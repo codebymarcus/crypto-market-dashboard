@@ -9,6 +9,13 @@ export interface Coin {
   price_change_percentage_24h: number | null;
 }
 
+export interface CoinSearchResult {
+  id: string;
+  name: string;
+  symbol: string;
+  market_cap_rank: number | null;
+}
+
 export type ChartPeriod = 1 | 7 | 30;
 export type HistoricalDataPoint = [timestamp: number, value: number];
 
