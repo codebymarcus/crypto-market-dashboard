@@ -1,7 +1,7 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import App from "./App";
+import { App } from "./App";
 import { useCoins } from "@/features/coins/hooks/use-coins";
 import { mockCoins } from "@/features/coins/test/fixtures";
 

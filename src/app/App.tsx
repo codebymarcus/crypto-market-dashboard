@@ -15,7 +15,7 @@ import { ErrorState } from "@/components/ui/ErrorState";
 import { usePreferencesStore } from "@/stores/use-preferences-store";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
-function App() {
+export function App() {
   const [search, setSearch] = useState("");
   const [sortField, setSortField] = useState<SortField>("price");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
@@ -138,5 +138,3 @@ function App() {
     </main>
   );
 }
-
-export default App;

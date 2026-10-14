@@ -6,10 +6,10 @@ import { PriceChart } from "./PriceChart";
 import { ErrorState } from "@/components/ui/ErrorState";
 import styles from "./CoinDetailView.module.scss";
 
-interface CoinDetailViewProps {
+type CoinDetailViewProps = {
   coin: Coin;
   onBack: () => void;
-}
+};
 
 export function CoinDetailView({ coin, onBack }: CoinDetailViewProps) {
   const change = coin.price_change_percentage_24h;
