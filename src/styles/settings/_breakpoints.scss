@@ -1,6 +1,6 @@
 // Compile-time breakpoints (custom props can't be used inside @media).
-$bp-grid-sm: 600px;   // coin grid 1 -> 2 cols
-$bp-grid-md: 900px;   // coin grid 2 -> 3 cols
-$bp-grid-lg: 1200px;  // coin grid 3 -> 4 cols
+$bp-grid-sm: 600px;   // card grid 1 -> 2 cols
+$bp-grid-md: 900px;   // card grid 2 -> 3 cols
+$bp-grid-lg: 1200px;  // card grid 3 -> 4 cols
 $bp-toolbar: 480px;   // App header collapse (kept distinct per proposal 9.4)
-$bp-controls: 640px;  // CoinControls stack (kept distinct per proposal 9.4)
+$bp-controls: 640px;  // controls stack (kept distinct per proposal 9.4)

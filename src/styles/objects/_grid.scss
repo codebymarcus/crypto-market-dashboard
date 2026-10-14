@@ -1,8 +1,8 @@
 @use "styles/settings/breakpoints" as bp;
 @use "styles/tools/media" as media;
 
-// Responsive coin grid: 1 -> 2 -> 3 -> 4 columns.
-@mixin coin-grid {
+// Responsive card grid: 1 -> 2 -> 3 -> 4 columns.
+@mixin card-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-6);

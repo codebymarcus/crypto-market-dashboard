@@ -1,4 +1,4 @@
-// Shared coin-card / skeleton-card surface. Callers add their own
+// Shared card / skeleton-card surface. Callers add their own
 // decoration (shadow, hover, min-height).
 @mixin card-surface {
   display: flex;
