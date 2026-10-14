@@ -1,5 +1,5 @@
 import type { ChartPeriod, HistoricalDataPoint, MarketChart } from "../types";
-import { isAbortError } from "./is-abort-error";
+import { isAbortError } from "@/lib/is-abort-error";
 
 const API_BASE_URL = "https://api.coingecko.com/api/v3";
 

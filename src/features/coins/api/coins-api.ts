@@ -1,5 +1,5 @@
 import type { Coin } from "../types";
-import { isAbortError } from "./is-abort-error";
+import { isAbortError } from "@/lib/is-abort-error";
 
 const COINS_API_URL = "https://api.coingecko.com/api/v3/coins/markets";
 
