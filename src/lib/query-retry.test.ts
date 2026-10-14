@@ -17,4 +17,10 @@ describe("retryApiQuery", () => {
     expect(retryApiQuery(1, new Error("boom"))).toBe(true);
     expect(retryApiQuery(2, new Error("boom"))).toBe(false);
   });
+
+  it("does not retry a statusless ApiError (network / CORS failure)", () => {
+    expect(retryApiQuery(0, new ApiError("Couldn't reach CoinGecko"))).toBe(
+      false,
+    );
+  });
 });

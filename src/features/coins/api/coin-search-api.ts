@@ -49,7 +49,7 @@ export async function fetchCoinSearch(
     }
 
     throw new CoinSearchApiError(
-      "Unable to connect to CoinGecko. Check your network connection.",
+      "Couldn't reach CoinGecko - you may be rate-limited or offline. Please wait a moment and try again.",
     );
   }
 

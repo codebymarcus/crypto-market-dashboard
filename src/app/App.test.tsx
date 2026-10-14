@@ -147,6 +147,27 @@ describe("Crypto dashboard", () => {
     ).not.toBeInTheDocument();
   });
 
+  it("shows a loading affordance while a search is in flight", async () => {
+    const user = userEvent.setup();
+    mockedUseCoinSearch.mockImplementation(() => ({
+      coins: [],
+      isPending: false,
+      isError: false,
+      error: null,
+      isFetching: true,
+      refetch: vi.fn(),
+    }));
+
+    render(<App />);
+
+    await user.type(
+      screen.getByRole("searchbox", { name: "Search cryptocurrencies" }),
+      "bit",
+    );
+
+    expect(screen.getByText("Searching…")).toBeInTheDocument();
+  });
+
   it("shows a loading state during the initial request", () => {
     setupBrowse({ data: undefined, isPending: true });
     render(<App />);

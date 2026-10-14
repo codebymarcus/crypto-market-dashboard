@@ -30,7 +30,7 @@ export function CoinsPage() {
   const debouncedSearch = useDebouncedValue(search, SEARCH_DEBOUNCE_MS);
   const isSearching = debouncedSearch.trim().length > 0;
 
-  const browse = useCoins({ page, perPage: PER_PAGE });
+  const browse = useCoins({ page, perPage: PER_PAGE, enabled: !isSearching });
   const searchResults = useCoinSearch(debouncedSearch);
 
   const browseState: CoinListState = {
@@ -133,8 +133,12 @@ export function CoinsPage() {
         onSortDirectionChange={setSortDirection}
       />
 
-      <p className={styles.resultsCount} role="status">
-        {isSearching ? `${visibleCoins.length} results` : `Page ${page}`}
+      <p className={styles.resultsCount} role="status" aria-live="polite">
+        {isSearching
+          ? active.isFetching
+            ? "Searching…"
+            : `${visibleCoins.length} results`
+          : `Page ${page}`}
       </p>
 
       {active.isPending ? (

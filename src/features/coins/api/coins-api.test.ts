@@ -64,9 +64,11 @@ describe("fetchCoins", () => {
 
   it("passes the abort signal to fetch", async () => {
     const controller = new AbortController();
-    const fetchMock = vi.fn().mockResolvedValue(
-      new Response(JSON.stringify([validCoin]), { status: 200 }),
-    );
+    const fetchMock = vi
+      .fn()
+      .mockResolvedValue(
+        new Response(JSON.stringify([validCoin]), { status: 200 }),
+      );
     vi.stubGlobal("fetch", fetchMock);
 
     await fetchCoins({ page: 1 }, controller.signal);
@@ -100,7 +102,9 @@ describe("fetchCoins", () => {
       vi.fn().mockRejectedValue(new TypeError("Failed to fetch")),
     );
 
-    await expect(fetchCoins()).rejects.toThrow("Unable to connect to CoinGecko.");
+    await expect(fetchCoins()).rejects.toThrow(
+      "Couldn't reach CoinGecko - you may be rate-limited or offline. Please wait a moment and try again.",
+    );
   });
 
   it("rejects unexpected API response data", async () => {
