@@ -1,10 +1,11 @@
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { fetchMarketChart, MarketChartApiError } from "../api/market-chart-api";
 import type { ChartPeriod } from "../types";
+import { coinKeys } from "./coin-keys";
 
 export function useMarketChart(coinId: string, days: ChartPeriod) {
   return useQuery({
-    queryKey: ["coins", "market-chart", coinId, days],
+    queryKey: coinKeys.marketChart(coinId, days),
     queryFn: ({ signal }) => fetchMarketChart(coinId, days, signal),
     enabled: Boolean(coinId),
     placeholderData: keepPreviousData,

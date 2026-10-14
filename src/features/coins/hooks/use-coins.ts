@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCoins } from "../api/coins-api";
+import { coinKeys } from "./coin-keys";
 
 export function useCoins() {
   return useQuery({
-    queryKey: ["coins", "market", "usd", 20, 1],
+    queryKey: coinKeys.markets(),
     queryFn: ({ signal }) => fetchCoins(signal),
   });
 }
