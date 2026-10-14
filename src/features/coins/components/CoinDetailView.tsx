@@ -3,7 +3,7 @@ import type { ChartPeriod, Coin } from "../types";
 import { useMarketChart } from "../hooks/use-market-chart";
 import { ChartPeriodSelector } from "./ChartPeriodSelector";
 import { PriceChart } from "./PriceChart";
-import { ErrorState } from "../../../components/ui/ErrorState";
+import { ErrorState } from "@/components/ui/ErrorState";
 import styles from "./CoinDetailView.module.scss";
 
 interface CoinDetailViewProps {

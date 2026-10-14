@@ -1,4 +1,4 @@
-import { usePreferencesStore } from "../../stores/use-preferences-store";
+import { usePreferencesStore } from "@/stores/use-preferences-store";
 import styles from "./ThemeToggle.module.scss";
 
 export function ThemeToggle() {

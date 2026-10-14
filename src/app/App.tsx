@@ -1,19 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Coin } from "../features/coins/types";
-import { CoinGrid } from "../features/coins/components/CoinGrid";
-import { CoinDetailView } from "../features/coins/components/CoinDetailView";
-import { useCoins } from "../features/coins/hooks/use-coins";
+import type { Coin } from "@/features/coins/types";
+import { CoinGrid } from "@/features/coins/components/CoinGrid";
+import { CoinDetailView } from "@/features/coins/components/CoinDetailView";
+import { useCoins } from "@/features/coins/hooks/use-coins";
 import styles from "./App.module.scss";
 import {
   sortCoins,
   type SortDirection,
   type SortField,
-} from "../features/coins/utils/sort-coins";
-import { CoinControls } from "../features/coins/components/CoinControls";
-import { ErrorState } from "../components/ui/ErrorState";
-import { CoinGridSkeleton } from "../features/coins/components/CoinGridSkeleton";
-import { usePreferencesStore } from "../stores/use-preferences-store";
-import { ThemeToggle } from "../components/ui/ThemeToggle";
+} from "@/features/coins/utils/sort-coins";
+import { CoinControls } from "@/features/coins/components/CoinControls";
+import { ErrorState } from "@/components/ui/ErrorState";
+import { CoinGridSkeleton } from "@/features/coins/components/CoinGridSkeleton";
+import { usePreferencesStore } from "@/stores/use-preferences-store";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 function App() {
   const [search, setSearch] = useState("");
