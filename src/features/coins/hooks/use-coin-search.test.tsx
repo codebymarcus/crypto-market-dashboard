@@ -84,6 +84,99 @@ describe("useCoinSearch", () => {
     expect(result.current.coins).toEqual([]);
   });
 
+  it("reports a loading state instead of stale coins while a follow-up search loads", async () => {
+    let resolveEthMarkets: (value: Response) => void = () => {};
+    const ethMarketsPromise = new Promise<Response>((resolve) => {
+      resolveEthMarkets = resolve;
+    });
+
+    const json = (body: unknown) =>
+      new Response(JSON.stringify(body), {
+        status: 200,
+        headers: { "Content-Type": "application/json" },
+      });
+
+    vi.stubGlobal(
+      "fetch",
+      vi.fn((input: RequestInfo | URL) => {
+        const url = String(input);
+
+        if (url.includes("/search")) {
+          const coins = url.includes("query=ethereum")
+            ? [
+                {
+                  id: "ethereum",
+                  name: "Ethereum",
+                  symbol: "ETH",
+                  market_cap_rank: 2,
+                },
+              ]
+            : [
+                {
+                  id: "bitcoin",
+                  name: "Bitcoin",
+                  symbol: "BTC",
+                  market_cap_rank: 1,
+                },
+              ];
+          return Promise.resolve(json({ coins }));
+        }
+
+        // markets endpoint — defer the follow-up (ethereum) request so we can
+        // observe the window where its data is not yet available.
+        if (url.includes("ethereum")) {
+          return ethMarketsPromise;
+        }
+        return Promise.resolve(
+          json([
+            {
+              id: "bitcoin",
+              symbol: "btc",
+              name: "Bitcoin",
+              image: "https://example.com/bitcoin.png",
+              current_price: 60000,
+              market_cap: 1_000_000,
+              market_cap_rank: 1,
+              price_change_percentage_24h: 2,
+            },
+          ]),
+        );
+      }),
+    );
+
+    const { result, rerender } = renderHook(
+      ({ query }) => useCoinSearch(query),
+      { wrapper: createWrapper(), initialProps: { query: "bitcoin" } },
+    );
+
+    await waitFor(() => expect(result.current.coins).toHaveLength(1));
+    expect(result.current.coins[0].id).toBe("bitcoin");
+
+    rerender({ query: "ethereum" });
+
+    // The follow-up search's market data is still loading, so we must not keep
+    // presenting the previous term's coins as a settled result.
+    await waitFor(() => expect(result.current.isPending).toBe(true));
+
+    resolveEthMarkets(
+      json([
+        {
+          id: "ethereum",
+          symbol: "eth",
+          name: "Ethereum",
+          image: "https://example.com/ethereum.png",
+          current_price: 3000,
+          market_cap: 500_000,
+          market_cap_rank: 2,
+          price_change_percentage_24h: 1,
+        },
+      ]),
+    );
+
+    await waitFor(() => expect(result.current.coins[0]?.id).toBe("ethereum"));
+    expect(result.current.isPending).toBe(false);
+  });
+
   it("clears results when a search is refined to zero matches", async () => {
     vi.stubGlobal(
       "fetch",

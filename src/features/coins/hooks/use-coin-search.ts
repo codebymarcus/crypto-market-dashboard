@@ -40,12 +40,19 @@ export function useCoinSearch(query: string): CoinListState {
     retry: retryApiQuery,
   });
 
-  const hasNoResults = searchQuery.isSuccess && ids.length === 0;
+  const hasNoResults =
+    searchQuery.isSuccess && !searchQuery.isPlaceholderData && ids.length === 0;
 
+  // keepPreviousData serves the prior term's data (isPlaceholderData) while a
+  // new query loads, which keeps isPending false. Treat that stale window as
+  // pending so the page shows the skeleton instead of the previous results.
   const isPending =
     enabled &&
     !hasNoResults &&
-    (searchQuery.isPending || marketsQuery.isPending);
+    (searchQuery.isPending ||
+      searchQuery.isPlaceholderData ||
+      marketsQuery.isPending ||
+      marketsQuery.isPlaceholderData);
 
   return {
     coins: hasNoResults ? [] : (marketsQuery.data ?? []),
