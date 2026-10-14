@@ -5,7 +5,7 @@ import App from "./App";
 import { useCoins } from "@/features/coins/hooks/use-coins";
 import { mockCoins } from "@/features/coins/test/fixtures";
 
-vi.mock("../features/coins/hooks/use-coins", () => ({
+vi.mock("@/features/coins/hooks/use-coins", () => ({
   useCoins: vi.fn(),
 }));
 
