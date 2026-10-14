@@ -41,17 +41,19 @@ export function CoinControls({
             Sort by
           </label>
 
-          <select
-            id="sort-field"
-            className={styles.select}
-            value={sortField}
-            onChange={(event) =>
-              onSortFieldChange(event.target.value as SortField)
-            }
-          >
-            <option value="price">Current price</option>
-            <option value="change">24h change</option>
-          </select>
+          <div className={styles.selectWrapper}>
+            <select
+              id="sort-field"
+              className={styles.select}
+              value={sortField}
+              onChange={(event) =>
+                onSortFieldChange(event.target.value as SortField)
+              }
+            >
+              <option value="price">Current price</option>
+              <option value="change">24h change</option>
+            </select>
+          </div>
         </div>
 
         <div className={styles.field}>
@@ -59,17 +61,19 @@ export function CoinControls({
             Order
           </label>
 
-          <select
-            id="sort-direction"
-            className={styles.select}
-            value={sortDirection}
-            onChange={(event) =>
-              onSortDirectionChange(event.target.value as SortDirection)
-            }
-          >
-            <option value="desc">Highest first</option>
-            <option value="asc">Lowest first</option>
-          </select>
+          <div className={styles.selectWrapper}>
+            <select
+              id="sort-direction"
+              className={styles.select}
+              value={sortDirection}
+              onChange={(event) =>
+                onSortDirectionChange(event.target.value as SortDirection)
+              }
+            >
+              <option value="desc">Highest first</option>
+              <option value="asc">Lowest first</option>
+            </select>
+          </div>
         </div>
       </div>
     </section>

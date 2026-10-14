@@ -60,8 +60,29 @@
   min-width: 0;
 }
 
+.selectWrapper {
+  position: relative;
+}
+
 .select {
+  appearance: none;
+  padding-right: var(--space-11);
   cursor: pointer;
+}
+
+// Custom chevron so the arrow spacing is consistent across browsers
+// (native arrows ignore padding in some engines).
+.selectWrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: var(--space-6);
+  width: 6px;
+  height: 6px;
+  border-right: 2px solid var(--color-text-secondary);
+  border-bottom: 2px solid var(--color-text-secondary);
+  transform: translateY(-70%) rotate(45deg);
+  pointer-events: none;
 }
 
 @include media.until(bp.$bp-controls) {
