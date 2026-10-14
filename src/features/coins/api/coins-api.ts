@@ -4,14 +4,6 @@ import { isAbortError } from "@/lib/is-abort-error";
 
 const COINS_API_URL = "https://api.coingecko.com/api/v3/coins/markets";
 
-const COINS_API_PARAMS = new URLSearchParams({
-  vs_currency: "usd",
-  order: "market_cap_desc",
-  per_page: "20",
-  page: "1",
-  sparkline: "false",
-});
-
 export class CoinsApiError extends ApiError {
   public override readonly name = "CoinsApiError";
 }
@@ -39,8 +31,34 @@ function isCoin(value: unknown): value is Coin {
   );
 }
 
-export async function fetchCoins(signal?: AbortSignal): Promise<Coin[]> {
-  const url = `${COINS_API_URL}?${COINS_API_PARAMS}`;
+type FetchCoinsOptions = {
+  page?: number;
+  perPage?: number;
+  ids?: string[];
+};
+
+export async function fetchCoins(
+  options: FetchCoinsOptions = {},
+  signal?: AbortSignal,
+): Promise<Coin[]> {
+  const { page = 1, perPage = 20, ids } = options;
+
+  const params = new URLSearchParams({
+    vs_currency: "usd",
+    order: "market_cap_desc",
+    sparkline: "false",
+  });
+
+  if (ids && ids.length > 0) {
+    params.set("ids", ids.join(","));
+    params.set("per_page", String(ids.length));
+    params.set("page", "1");
+  } else {
+    params.set("per_page", String(perPage));
+    params.set("page", String(page));
+  }
+
+  const url = `${COINS_API_URL}?${params}`;
 
   let response: Response;
 
