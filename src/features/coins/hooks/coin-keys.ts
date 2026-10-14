@@ -10,7 +10,11 @@ import type { ChartPeriod } from "../types";
  */
 export const coinKeys = {
   all: ["coins"] as const,
-  markets: () => [...coinKeys.all, "market", "usd", 20, 1] as const,
+  markets: ({ page, perPage }: { page: number; perPage: number }) =>
+    [...coinKeys.all, "market", "usd", perPage, page] as const,
+  marketsByIds: (ids: string[]) =>
+    [...coinKeys.all, "market", "usd", "ids", ...ids] as const,
+  search: (query: string) => [...coinKeys.all, "search", query] as const,
   marketChart: (coinId: string, days: ChartPeriod) =>
     [...coinKeys.all, "market-chart", coinId, days] as const,
 };
