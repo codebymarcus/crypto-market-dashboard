@@ -5,7 +5,9 @@ import { defineConfig } from 'vite'
 const srcDir = fileURLToPath(new URL('./src', import.meta.url))
 
 // https://vite.dev/config/
-export default defineConfig({
+export default defineConfig(({ command }) => ({
+  // GitHub Pages serves this project site from a subpath; local dev stays at root.
+  base: command === 'build' ? '/crypto-market-dashboard/' : '/',
   plugins: [react()],
   resolve: {
     alias: {
@@ -20,4 +22,4 @@ export default defineConfig({
       },
     },
   },
-})
+}))
