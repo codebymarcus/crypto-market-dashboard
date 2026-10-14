@@ -1,16 +1,11 @@
 import type { ChartPeriod, HistoricalDataPoint, MarketChart } from "../types";
+import { ApiError } from "@/lib/api-error";
 import { isAbortError } from "@/lib/is-abort-error";
 
 const API_BASE_URL = "https://api.coingecko.com/api/v3";
 
-export class MarketChartApiError extends Error {
-  public readonly status?: number;
-
-  constructor(message: string, status?: number) {
-    super(message);
-    this.status = status;
-    this.name = "MarketChartApiError";
-  }
+export class MarketChartApiError extends ApiError {
+  public override readonly name = "MarketChartApiError";
 }
 
 function isDataPoint(value: unknown): value is HistoricalDataPoint {

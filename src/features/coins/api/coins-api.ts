@@ -1,4 +1,5 @@
 import type { Coin } from "../types";
+import { ApiError } from "@/lib/api-error";
 import { isAbortError } from "@/lib/is-abort-error";
 
 const COINS_API_URL = "https://api.coingecko.com/api/v3/coins/markets";
@@ -11,14 +12,8 @@ const COINS_API_PARAMS = new URLSearchParams({
   sparkline: "false",
 });
 
-export class CoinsApiError extends Error {
-  public readonly status?: number;
-
-  constructor(message: string, status?: number) {
-    super(message);
-    this.status = status;
-    this.name = "CoinsApiError";
-  }
+export class CoinsApiError extends ApiError {
+  public override readonly name = "CoinsApiError";
 }
 
 function isNullableNumber(value: unknown): boolean {
