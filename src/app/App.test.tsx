@@ -3,17 +3,27 @@ import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { App } from "./App";
 import { useCoins } from "@/features/coins/hooks/use-coins";
+import { useCoinSearch } from "@/features/coins/hooks/use-coin-search";
 import { mockCoins } from "@/features/coins/test/fixtures";
 
 vi.mock("@/features/coins/hooks/use-coins", () => ({
   useCoins: vi.fn(),
 }));
 
+vi.mock("@/features/coins/hooks/use-coin-search", () => ({
+  useCoinSearch: vi.fn(),
+}));
+
+vi.mock("@/features/coins/hooks/use-debounced-value", () => ({
+  useDebouncedValue: (value: unknown) => value,
+}));
+
 const mockedUseCoins = vi.mocked(useCoins);
+const mockedUseCoinSearch = vi.mocked(useCoinSearch);
 
 const refetch = vi.fn();
 
-function setupQuery(overrides: Record<string, unknown> = {}) {
+function setupBrowse(overrides: Record<string, unknown> = {}) {
   mockedUseCoins.mockReturnValue({
     data: mockCoins,
     error: null,
@@ -25,28 +35,48 @@ function setupQuery(overrides: Record<string, unknown> = {}) {
   } as unknown as ReturnType<typeof useCoins>);
 }
 
+function setupSearch() {
+  // Simulate server-side search over the fixture.
+  mockedUseCoinSearch.mockImplementation((query: string) => {
+    const q = query.trim().toLowerCase();
+    const coins = q
+      ? mockCoins.filter(
+          (coin) =>
+            coin.name.toLowerCase().includes(q) ||
+            coin.symbol.toLowerCase().includes(q),
+        )
+      : [];
+    return {
+      coins,
+      isPending: false,
+      isError: false,
+      error: null,
+      isFetching: false,
+      refetch: vi.fn(),
+    };
+  });
+}
+
 beforeEach(() => {
   vi.clearAllMocks();
-  setupQuery();
+  setupBrowse();
+  setupSearch();
 });
 
 describe("Crypto dashboard", () => {
   it("renders the cryptocurrency list", () => {
     render(<App />);
-
     expect(screen.getByText("Bitcoin")).toBeInTheDocument();
     expect(screen.getByText("Ethereum")).toBeInTheDocument();
     expect(screen.getByText("Solana")).toBeInTheDocument();
   });
 
-  it("filters coins by name", async () => {
+  it("searches coins by name via the API", async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.type(
-      screen.getByRole("searchbox", {
-        name: "Search cryptocurrencies",
-      }),
+      screen.getByRole("searchbox", { name: "Search cryptocurrencies" }),
       "ethereum",
     );
 
@@ -55,14 +85,12 @@ describe("Crypto dashboard", () => {
     expect(screen.queryByText("Solana")).not.toBeInTheDocument();
   });
 
-  it("filters coins by symbol regardless of case", async () => {
+  it("searches coins by symbol regardless of case", async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.type(
-      screen.getByRole("searchbox", {
-        name: "Search cryptocurrencies",
-      }),
+      screen.getByRole("searchbox", { name: "Search cryptocurrencies" }),
       "BTC",
     );
 
@@ -70,14 +98,12 @@ describe("Crypto dashboard", () => {
     expect(screen.queryByText("Ethereum")).not.toBeInTheDocument();
   });
 
-  it("shows an empty state when no coins match", async () => {
+  it("shows an empty state when no coins match the search", async () => {
     const user = userEvent.setup();
     render(<App />);
 
     await user.type(
-      screen.getByRole("searchbox", {
-        name: "Search cryptocurrencies",
-      }),
+      screen.getByRole("searchbox", { name: "Search cryptocurrencies" }),
       "not-a-coin",
     );
 
@@ -103,14 +129,27 @@ describe("Crypto dashboard", () => {
     expect(names).toEqual(["Solana", "Bitcoin", "Ethereum"]);
   });
 
-  it("shows a loading state during the initial request", () => {
-    setupQuery({
-      data: undefined,
-      isPending: true,
-    });
-
+  it("shows the pager in browse mode and hides it while searching", async () => {
+    const user = userEvent.setup();
     render(<App />);
 
+    expect(
+      screen.getByRole("navigation", { name: "Coin list pagination" }),
+    ).toBeInTheDocument();
+
+    await user.type(
+      screen.getByRole("searchbox", { name: "Search cryptocurrencies" }),
+      "bitcoin",
+    );
+
+    expect(
+      screen.queryByRole("navigation", { name: "Coin list pagination" }),
+    ).not.toBeInTheDocument();
+  });
+
+  it("shows a loading state during the initial request", () => {
+    setupBrowse({ data: undefined, isPending: true });
+    render(<App />);
     expect(
       screen.getByText("loading cryptocurrency data..."),
     ).toBeInTheDocument();
@@ -118,8 +157,7 @@ describe("Crypto dashboard", () => {
 
   it("shows an error and allows the user to retry", async () => {
     const user = userEvent.setup();
-
-    setupQuery({
+    setupBrowse({
       data: undefined,
       error: new Error("Network connection failed."),
       isError: true,
@@ -132,7 +170,6 @@ describe("Crypto dashboard", () => {
     );
 
     await user.click(screen.getByRole("button", { name: "Try again" }));
-
     expect(refetch).toHaveBeenCalledOnce();
   });
 });
