@@ -22,7 +22,7 @@ Market data is fetched live from the public [CoinGecko API](https://www.coingeck
 | Framework     | React 19 + TypeScript                                                                            |
 | Build tool    | Vite 8                                                                                           |
 | Data fetching | TanStack Query (React Query)                                                                     |
-| Client state  | Zustand (persisted theme preference); search & sort are local component state                                                               |
+| Client state  | Zustand (persisted theme preference); search & sort are local component state                    |
 | Styling       | Sass + CSS Modules, organised in ITCSS-informed layers (see `docs/css-architecture-proposal.md`) |
 | Testing       | Vitest + Testing Library                                                                         |
 
@@ -78,6 +78,4 @@ src/
 - The styling layer follows an ITCSS-informed architecture that keeps CSS
   Modules for component scoping. See
   [`docs/styles-architecture.md`](docs/styles-architecture.md) for the developer
-  guide (tokens, mixins, conventions, and a cookbook), and
-  [`docs/css-architecture-proposal.md`](docs/css-architecture-proposal.md) for
-  the rationale behind it.
+  guide (tokens, mixins, conventions, and a cookbook).
