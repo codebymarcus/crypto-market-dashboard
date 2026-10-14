@@ -4,7 +4,7 @@
 // Responsive card grid: 1 -> 2 -> 3 -> 4 columns.
 @mixin card-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--space-6);
   margin: 0;
   padding: 0;

@@ -133,13 +133,11 @@ export function CoinsPage() {
         onSortDirectionChange={setSortDirection}
       />
 
-      <p className={styles.resultsCount} role="status" aria-live="polite">
-        {isSearching
-          ? active.isFetching
-            ? "Searching…"
-            : `${visibleCoins.length} results`
-          : `Page ${page}`}
-      </p>
+      {isSearching && (
+        <p className={styles.resultsCount} role="status" aria-live="polite">
+          {active.isFetching ? "Searching…" : `${visibleCoins.length} results`}
+        </p>
+      )}
 
       {active.isPending ? (
         <CoinGridSkeleton />

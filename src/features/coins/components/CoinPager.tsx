@@ -25,7 +25,11 @@ export function CoinPager({
         Previous
       </button>
 
-      <span className={styles.page} aria-current="page">
+      <span
+        className={styles.page}
+        aria-current="page"
+        aria-live="polite"
+      >
         Page {page}
       </span>
 
