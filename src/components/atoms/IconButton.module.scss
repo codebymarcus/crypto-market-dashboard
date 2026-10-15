@@ -25,7 +25,7 @@
   }
 
   > svg {
-    font-size: 1.125rem;
+    font-size: var(--font-size-lg);
   }
 
   &[data-busy="true"] > svg {

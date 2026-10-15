@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { Text } from "@/components/atoms/Text";
 import styles from "./PageHeader.module.scss";
 
 type PageHeaderProps = {
@@ -11,8 +12,12 @@ export function PageHeader({ title, subtitle, actions }: PageHeaderProps) {
   return (
     <header className={styles.header}>
       <div>
-        <h1 className={styles.heading}>{title}</h1>
-        {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
+        <Text variant="display">{title}</Text>
+        {subtitle ? (
+          <Text variant="subtitle" tone="secondary" className={styles.subtitle}>
+            {subtitle}
+          </Text>
+        ) : null}
       </div>
       {actions ? <div className={styles.actions}>{actions}</div> : null}
     </header>

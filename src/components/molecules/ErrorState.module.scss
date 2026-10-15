@@ -10,12 +10,11 @@
 
 .title {
   margin: 0 0 var(--space-3);
-  font-size: 1.1rem;
 }
 
 .message {
   margin: 0 0 var(--space-8);
-  line-height: 1.6;
+  line-height: var(--line-height-relaxed);
   overflow-wrap: anywhere;
 }
 

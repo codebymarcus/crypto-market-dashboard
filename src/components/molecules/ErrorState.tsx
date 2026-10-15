@@ -1,3 +1,4 @@
+import { Text } from "@/components/atoms/Text";
 import styles from "./ErrorState.module.scss";
 
 type ErrorStateProps = {
@@ -15,8 +16,12 @@ export function ErrorState({
 }: ErrorStateProps) {
   return (
     <section className={styles.container} role="alert">
-      <h2 className={styles.title}>{title}</h2>
-      <p className={styles.message}>{message}</p>
+      <Text variant="heading" as="h2" className={styles.title}>
+        {title}
+      </Text>
+      <Text variant="body" className={styles.message}>
+        {message}
+      </Text>
 
       <button
         className={styles.retryButton}
