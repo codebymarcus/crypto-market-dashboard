@@ -18,6 +18,17 @@ vi.mock("@/features/coins/hooks/use-debounced-value", () => ({
   useDebouncedValue: (value: unknown) => value,
 }));
 
+vi.mock("@/features/coins/hooks/use-market-chart", () => ({
+  useMarketChart: vi.fn(() => ({
+    data: undefined,
+    isPending: true,
+    isError: false,
+    error: null,
+    refetch: vi.fn(),
+    isFetching: false,
+  })),
+}));
+
 const mockedUseCoins = vi.mocked(useCoins);
 const mockedUseCoinSearch = vi.mocked(useCoinSearch);
 
@@ -193,6 +204,17 @@ describe("Crypto dashboard", () => {
     );
 
     expect(refetch).toHaveBeenCalledOnce();
+  });
+
+  it("lazy-loads the coin detail view when a coin is selected", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole("button", { name: /bitcoin/i }));
+
+    expect(
+      await screen.findByRole("button", { name: /back to market/i }),
+    ).toBeInTheDocument();
   });
 
   it("shows an error and allows the user to retry", async () => {

@@ -1,10 +1,9 @@
-import { useMemo, useState } from "react";
+import { lazy, Suspense, useMemo, useState } from "react";
 import { Text } from "@/components/atoms/Text";
 import { ErrorState } from "@/components/molecules/ErrorState";
 import { ThemeToggle } from "@/components/molecules/ThemeToggle";
 import { PageLayout } from "@/components/templates/PageLayout";
 import { CoinControls } from "./CoinControls";
-import { CoinDetailView } from "./CoinDetailView";
 import { CoinGrid } from "./CoinGrid";
 import { CoinGridSkeleton } from "./CoinGridSkeleton";
 import { CoinPager } from "./CoinPager";
@@ -18,6 +17,14 @@ import {
 } from "../utils/sort-coins";
 import type { Coin } from "../types";
 import styles from "./CoinsPage.module.scss";
+
+// Lazy-loaded so its heavy subtree (PriceChart → recharts) is split into an
+// on-demand chunk, fetched only when a coin detail view is opened.
+const CoinDetailView = lazy(() =>
+  import("./CoinDetailView").then((module) => ({
+    default: module.CoinDetailView,
+  })),
+);
 
 const PER_PAGE = 20;
 const SEARCH_DEBOUNCE_MS = 300;
@@ -95,10 +102,18 @@ export function CoinsPage() {
   if (selectedCoin) {
     return (
       <PageLayout {...layoutProps}>
-        <CoinDetailView
-          coin={selectedCoin}
-          onBack={() => setSelectedCoin(null)}
-        />
+        <Suspense
+          fallback={
+            <Text role="status" tone="secondary">
+              Loading…
+            </Text>
+          }
+        >
+          <CoinDetailView
+            coin={selectedCoin}
+            onBack={() => setSelectedCoin(null)}
+          />
+        </Suspense>
       </PageLayout>
     );
   }
