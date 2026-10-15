@@ -176,6 +176,18 @@ describe("Crypto dashboard", () => {
     ).toBeInTheDocument();
   });
 
+  it("refreshes market data from the controls row", async () => {
+    const user = userEvent.setup();
+    render(<App />);
+
+    const controls = screen.getByRole("region", { name: "Coin filters" });
+    await user.click(
+      within(controls).getByRole("button", { name: "Refresh" }),
+    );
+
+    expect(refetch).toHaveBeenCalledOnce();
+  });
+
   it("shows an error and allows the user to retry", async () => {
     const user = userEvent.setup();
     setupBrowse({

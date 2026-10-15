@@ -1,4 +1,5 @@
 @use "styles/tools/focus" as focus;
+@use "styles/tools/transition" as transition;
 
 .group {
   display: inline-flex;
@@ -18,9 +19,8 @@
   font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
-  transition:
-    color var(--duration-fast) var(--ease-default),
-    background var(--duration-fast) var(--ease-default);
+
+  @include transition.transition(color, background);
 
   &:hover:not([aria-pressed="true"]) {
     color: var(--color-text);

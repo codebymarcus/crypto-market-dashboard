@@ -1,4 +1,6 @@
 import { usePreferencesStore } from "@/stores/use-preferences-store";
+import { MoonIcon } from "./icons/MoonIcon";
+import { SunIcon } from "./icons/SunIcon";
 import styles from "./ThemeToggle.module.scss";
 
 export function ThemeToggle() {
@@ -16,8 +18,11 @@ export function ThemeToggle() {
       aria-label={`Switch to ${nextTheme} mode`}
       title={`Switch to ${nextTheme} mode`}
     >
-      <span aria-hidden="true">{theme === "light" ? "🌙" : "☀️"}</span>
-      <span>{theme === "light" ? "Dark mode" : "Light mode"}</span>
+      {theme === "light" ? (
+        <MoonIcon className={styles.icon} />
+      ) : (
+        <SunIcon className={styles.icon} />
+      )}
     </button>
   );
 }

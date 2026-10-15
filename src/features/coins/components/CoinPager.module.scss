@@ -1,4 +1,5 @@
 @use "styles/tools/focus" as focus;
+@use "styles/tools/transition" as transition;
 
 .pager {
   display: flex;
@@ -20,9 +21,8 @@
   font: inherit;
   font-weight: 600;
   cursor: pointer;
-  transition:
-    background var(--duration-fast) var(--ease-default),
-    border-color var(--duration-fast) var(--ease-default);
+
+  @include transition.transition(background, border-color);
 
   &:hover:not(:disabled) {
     background: var(--color-surface-hover);

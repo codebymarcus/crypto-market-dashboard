@@ -1,24 +1,19 @@
 @use "styles/objects/button" as button;
-@use "styles/tools/a11y" as a11y;
+@use "styles/tools/transition" as transition;
 
 .toggle {
   @include button.button-secondary;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-3);
-  min-height: 42px;
-  padding: var(--space-5) var(--space-7);
-  font-size: 0.875rem;
-  white-space: nowrap;
+  width: 42px;
+  height: 42px;
+  padding: 0;
+  flex-shrink: 0;
 
-  transition:
-    background-color var(--duration-fast) var(--ease-default),
-    border-color var(--duration-fast) var(--ease-default);
+  @include transition.transition(background-color, border-color);
 }
 
-@include a11y.reduced-motion {
-  .toggle {
-    transition: none;
-  }
+.icon {
+  font-size: 1.125rem;
 }

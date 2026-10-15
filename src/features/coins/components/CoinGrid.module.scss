@@ -1,6 +1,6 @@
 @use "styles/objects/card" as card;
 @use "styles/objects/grid" as grid;
-@use "styles/tools/a11y" as a11y;
+@use "styles/tools/transition" as transition;
 @use "styles/tools/focus" as focus;
 
 .list {
@@ -19,9 +19,8 @@
   font: inherit;
   text-align: left;
   box-shadow: 0 1px 2px var(--shadow-card);
-  transition:
-    border-color var(--duration-fast) var(--ease-default),
-    box-shadow var(--duration-fast) var(--ease-default);
+
+  @include transition.transition(border-color, box-shadow);
 
   &:hover {
     border-color: var(--color-border-strong);
@@ -102,10 +101,4 @@
   border-radius: var(--radius-md);
   color: var(--color-text-secondary);
   text-align: center;
-}
-
-@include a11y.reduced-motion {
-  .card {
-    transition: none;
-  }
 }

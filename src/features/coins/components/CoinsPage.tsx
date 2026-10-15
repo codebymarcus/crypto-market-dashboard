@@ -65,15 +65,6 @@ export function CoinsPage() {
 
       <div className={styles.headerActions}>
         <ThemeToggle />
-
-        <button
-          className={styles.refreshButton}
-          type="button"
-          onClick={() => active.refetch()}
-          disabled={active.isFetching}
-        >
-          {active.isFetching ? "Refreshing..." : "Refresh"}
-        </button>
       </div>
     </header>
   );
@@ -131,6 +122,8 @@ export function CoinsPage() {
         onSortFieldChange={setSortField}
         sortDirection={sortDirection}
         onSortDirectionChange={setSortDirection}
+        onRefresh={() => active.refetch()}
+        isRefreshing={active.isFetching}
       />
 
       {isSearching && (
