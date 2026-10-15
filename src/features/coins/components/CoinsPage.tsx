@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
-import { ErrorState } from "@/components/ui/ErrorState";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
+import { ErrorState } from "@/components/molecules/ErrorState";
+import { ThemeToggle } from "@/components/molecules/ThemeToggle";
 import { CoinControls } from "./CoinControls";
 import { CoinDetailView } from "./CoinDetailView";
 import { CoinGrid } from "./CoinGrid";

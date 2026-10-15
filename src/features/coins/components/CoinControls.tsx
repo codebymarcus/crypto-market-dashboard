@@ -1,4 +1,4 @@
-import { RefreshIcon } from "@/components/ui/icons/RefreshIcon";
+import { RefreshIcon } from "@/components/atoms/icons/RefreshIcon";
 import type { SortDirection, SortField } from "../utils/sort-coins";
 import styles from "./CoinControls.module.scss";
 
