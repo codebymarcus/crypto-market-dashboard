@@ -1,9 +1,5 @@
 @use "styles/settings/breakpoints" as bp;
 @use "styles/tools/media" as media;
-@use "styles/tools/focus" as focus;
-@use "styles/tools/a11y" as a11y;
-@use "styles/tools/transition" as transition;
-@use "styles/objects/button" as button;
 
 .controls {
   display: flex;
@@ -11,13 +7,6 @@
   justify-content: space-between;
   gap: var(--space-10);
   margin-bottom: var(--space-11);
-}
-
-.searchGroup,
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
 }
 
 .searchGroup {
@@ -36,98 +25,10 @@
   gap: var(--space-6);
 }
 
-.field {
+// The sort/order fields are SelectField molecules (own the label+control);
+// their min width is layout context, so it lives here on the direct children.
+.sortGroup > * {
   min-width: 140px;
-}
-
-.label {
-  color: var(--color-text-secondary);
-  font-size: 0.8rem;
-  font-weight: 600;
-}
-
-.searchInput,
-.select {
-  width: 100%;
-  min-height: 42px;
-  padding: var(--space-5) var(--space-6);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--color-surface);
-  color: var(--color-text);
-
-  &::placeholder {
-    color: var(--color-text-secondary);
-  }
-
-  @include focus.focus-ring(2px) {
-    border-color: var(--color-focus);
-  }
-}
-
-.searchInput {
-  min-width: 0;
-}
-
-.selectWrapper {
-  position: relative;
-}
-
-.select {
-  appearance: none;
-  padding-right: var(--space-11);
-  cursor: pointer;
-}
-
-// Custom chevron so the arrow spacing is consistent across browsers
-// (native arrows ignore padding in some engines).
-.selectWrapper::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  right: var(--space-6);
-  width: 6px;
-  height: 6px;
-  border-right: 2px solid var(--color-text-secondary);
-  border-bottom: 2px solid var(--color-text-secondary);
-  transform: translateY(-70%) rotate(45deg);
-  pointer-events: none;
-}
-
-.refreshButton {
-  @include button.button-secondary;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  padding: 0;
-  flex-shrink: 0;
-
-  @include transition.transition(background-color, border-color);
-
-  &:hover:not(:disabled) {
-    border-color: var(--color-text-secondary);
-  }
-
-  &:disabled {
-    // The spinning icon signals activity; keep the surface interactive-looking.
-    cursor: progress;
-  }
-}
-
-.icon {
-  font-size: 1.125rem;
-}
-
-.spinning {
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 @include media.until(bp.$bp-controls) {
@@ -147,18 +48,7 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .field {
+  .sortGroup > * {
     min-width: 0;
-  }
-
-  .refreshButton {
-    // Align the square button with the bottom of the select inputs.
-    align-self: flex-end;
-  }
-}
-
-@include a11y.reduced-motion {
-  .spinning {
-    animation: none;
   }
 }

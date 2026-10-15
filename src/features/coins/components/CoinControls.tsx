@@ -1,6 +1,19 @@
+import { IconButton } from "@/components/atoms/IconButton";
 import { RefreshIcon } from "@/components/atoms/icons/RefreshIcon";
+import { SearchBox } from "@/components/molecules/SearchBox";
+import { SelectField } from "@/components/molecules/SelectField";
 import type { SortDirection, SortField } from "../utils/sort-coins";
 import styles from "./CoinControls.module.scss";
+
+const SORT_FIELD_OPTIONS = [
+  { value: "price", label: "Current price" },
+  { value: "change", label: "24h change" },
+] as const satisfies readonly { value: SortField; label: string }[];
+
+const SORT_DIRECTION_OPTIONS = [
+  { value: "desc", label: "Highest first" },
+  { value: "asc", label: "Lowest first" },
+] as const satisfies readonly { value: SortDirection; label: string }[];
 
 type CoinControlProps = {
   search: string;
@@ -26,75 +39,41 @@ export function CoinControls({
   return (
     <section className={styles.controls} aria-label="Coin filters">
       <div className={styles.searchGroup}>
-        <label className={styles.label} htmlFor="coin-search">
-          Search cryptocurrencies
-        </label>
-
-        <input
-          type="search"
+        <SearchBox
           id="coin-search"
-          className={styles.searchInput}
+          label="Search cryptocurrencies"
           placeholder="Search by name or symbol..."
           value={search}
-          onChange={(event) => onSearchChange(event.target.value)}
+          onChange={onSearchChange}
         />
       </div>
 
       <div className={styles.actionsGroup}>
         <div className={styles.sortGroup}>
-          <div className={styles.field}>
-            <label htmlFor="sort-field" className={styles.label}>
-              Sort by
-            </label>
-
-            <div className={styles.selectWrapper}>
-              <select
-                id="sort-field"
-                className={styles.select}
-                value={sortField}
-                onChange={(event) =>
-                  onSortFieldChange(event.target.value as SortField)
-                }
-              >
-                <option value="price">Current price</option>
-                <option value="change">24h change</option>
-              </select>
-            </div>
-          </div>
-
-          <div className={styles.field}>
-            <label htmlFor="sort-direction" className={styles.label}>
-              Order
-            </label>
-
-            <div className={styles.selectWrapper}>
-              <select
-                id="sort-direction"
-                className={styles.select}
-                value={sortDirection}
-                onChange={(event) =>
-                  onSortDirectionChange(event.target.value as SortDirection)
-                }
-              >
-                <option value="desc">Highest first</option>
-                <option value="asc">Lowest first</option>
-              </select>
-            </div>
-          </div>
+          <SelectField
+            id="sort-field"
+            label="Sort by"
+            value={sortField}
+            options={SORT_FIELD_OPTIONS}
+            onChange={onSortFieldChange}
+          />
+          <SelectField
+            id="sort-direction"
+            label="Order"
+            value={sortDirection}
+            options={SORT_DIRECTION_OPTIONS}
+            onChange={onSortDirectionChange}
+          />
         </div>
 
-        <button
-          className={styles.refreshButton}
-          type="button"
-          onClick={onRefresh}
-          disabled={isRefreshing}
-          aria-label="Refresh"
+        <IconButton
+          busy={isRefreshing}
+          label="Refresh"
           title="Refresh market data"
+          onClick={onRefresh}
         >
-          <RefreshIcon
-            className={`${styles.icon} ${isRefreshing ? styles.spinning : ""}`}
-          />
-        </button>
+          <RefreshIcon />
+        </IconButton>
       </div>
     </section>
   );
