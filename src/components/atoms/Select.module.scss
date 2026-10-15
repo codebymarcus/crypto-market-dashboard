@@ -7,7 +7,7 @@
 .select {
   @include form-control.form-control;
   appearance: none;
-  padding-right: var(--space-11);
+  padding-right: var(--space-6);
   cursor: pointer;
 }
 
@@ -17,7 +17,7 @@
   content: "";
   position: absolute;
   top: 50%;
-  right: var(--space-6);
+  right: var(--space-3);
   width: 6px;
   height: 6px;
   border-right: 2px solid var(--color-text-secondary);

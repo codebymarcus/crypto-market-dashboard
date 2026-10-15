@@ -136,24 +136,20 @@ Available colour tokens: `--color-background`, `--color-surface`,
 
 ### Spacing (`settings/_spacing.scss`)
 
-A numeric scale. Values are inherited verbatim from the pre-refactor styles, so
-the scale is granular rather than a clean 4px grid (consolidating near-duplicates
-would be a visible change, so it's deferred).
+A numeric scale on a consistent **4px grid** — every step is a multiple of 4px.
 
-| Token       | Value |     | Token        | Value |
-| ----------- | ----- | --- | ------------ | ----- |
-| `--space-1` | 5px   |     | `--space-8`  | 16px  |
-| `--space-2` | 7px   |     | `--space-9`  | 18px  |
-| `--space-3` | 8px   |     | `--space-10` | 20px  |
-| `--space-4` | 9px   |     | `--space-11` | 24px  |
-| `--space-5` | 10px  |     | `--space-12` | 28px  |
-| `--space-6` | 12px  |     | `--space-13` | 32px  |
-| `--space-7` | 14px  |     | `--space-14` | 40px  |
+| Token       | Value |     | Token       | Value |
+| ----------- | ----- | --- | ----------- | ----- |
+| `--space-1` | 4px   |     | `--space-6` | 24px  |
+| `--space-2` | 8px   |     | `--space-7` | 28px  |
+| `--space-3` | 12px  |     | `--space-8` | 32px  |
+| `--space-4` | 16px  |     | `--space-9` | 40px  |
+| `--space-5` | 20px  |     |             |       |
 
 ```scss
 .card {
-  padding: var(--space-9); // 18px
-  gap: var(--space-7); // 14px
+  padding: var(--space-3); // 12px
+  gap: var(--space-2); // 8px
 }
 ```
 
@@ -187,11 +183,11 @@ transition:
 A consolidated type scale, in **rem** so it scales with the user's root font size.
 Three token families:
 
-| Token family | Values | Notes |
-| --- | --- | --- |
-| `--font-size-*` | `2xs` 0.75 · `xs` 0.8125 · `sm` 0.875 · `base` 1 · `lg` 1.125 · `xl` 1.5 (rem) · `display` / `display-lg` (responsive `clamp`) | sizes |
-| `--font-weight-*` | `regular` 400 · `medium` 500 · `semibold` 600 · `bold` 700 | weights |
-| `--line-height-*` | `tight` 1.2 · `normal` 1.5 · `relaxed` 1.6 | line-heights |
+| Token family      | Values                                                                                                                         | Notes        |
+| ----------------- | ------------------------------------------------------------------------------------------------------------------------------ | ------------ |
+| `--font-size-*`   | `2xs` 0.75 · `xs` 0.8125 · `sm` 0.875 · `base` 1 · `lg` 1.125 · `xl` 1.5 (rem) · `display` / `display-lg` (responsive `clamp`) | sizes        |
+| `--font-weight-*` | `regular` 400 · `medium` 500 · `semibold` 600 · `bold` 700                                                                     | weights      |
+| `--line-height-*` | `tight` 1.2 · `normal` 1.5 · `relaxed` 1.6                                                                                     | line-heights |
 
 The **`Text` atom** (`components/atoms/Text.tsx`) is the primary consumer: its
 semantic `variant`s (display / title / heading / subtitle / body / small / caption)
@@ -364,9 +360,9 @@ decoration.
 @mixin card-surface {
   display: flex;
   align-items: center;
-  gap: var(--space-7);
+  gap: var(--space-4);
   min-width: 0;
-  padding: var(--space-9);
+  padding: var(--space-5);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
   background: var(--color-surface);
@@ -407,7 +403,7 @@ The responsive 1 → 2 → 3 → 4 column grid, breakpoints included:
 @mixin coin-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: var(--space-6);
+  gap: var(--space-3);
   margin: 0;
   padding: 0;
   list-style: none;
@@ -465,7 +461,7 @@ focus. Callers add their own **padding / layout / transition**.
 
 .retryButton {
   @include button.button-secondary;
-  padding: var(--space-5) var(--space-8);
+  padding: var(--space-3) var(--space-4);
 }
 ```
 
@@ -477,7 +473,7 @@ focus. Callers add their own **padding / layout / transition**.
 .refreshButton {
   @include button.button-secondary;
   flex-shrink: 0;
-  padding: var(--space-5) var(--space-8);
+  padding: var(--space-3) var(--space-4);
   @include transition.transition(background-color, border-color);
 
   &:hover:not(:disabled) {
@@ -574,7 +570,7 @@ $bp-wide: 1440px;
 
 .list {
   @include media.from(bp.$bp-wide) {
-    gap: var(--space-11);
+    gap: var(--space-6);
   }
 }
 ```
@@ -602,8 +598,8 @@ Add the token to **both** blocks in `settings/_theme.scss` so it switches:
 
 .banner {
   display: flex;
-  gap: var(--space-6);
-  padding: var(--space-8);
+  gap: var(--space-3);
+  padding: var(--space-4);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);

@@ -1,7 +1,7 @@
 @use "styles/objects/button" as button;
 
 .container {
-  padding: var(--space-11);
+  padding: var(--space-6);
   border: 1px solid var(--color-error-border);
   border-radius: var(--radius-md);
   background: var(--color-error-background);
@@ -9,16 +9,16 @@
 }
 
 .title {
-  margin: 0 0 var(--space-3);
+  margin: 0 0 var(--space-2);
 }
 
 .message {
-  margin: 0 0 var(--space-8);
+  margin: 0 0 var(--space-4);
   line-height: var(--line-height-relaxed);
   overflow-wrap: anywhere;
 }
 
 .retryButton {
   @include button.button-secondary;
-  padding: var(--space-5) var(--space-8);
+  padding: var(--space-3) var(--space-4);
 }

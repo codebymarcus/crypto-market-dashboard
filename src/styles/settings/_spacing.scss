@@ -1,20 +1,15 @@
-/* Values inherited verbatim from the current styles, so this step is
-   visually identical. The scale is deliberately granular because today's
-   spacing isn't on a uniform grid; consolidating near-duplicates
-   (5/7/9, 10-vs-12, etc.) is a visible change left for a later pass. */
+/* A consistent 4px spacing grid. The scale was previously granular and
+   off-grid (near-duplicates like 5/7/8/9 and 10-vs-12); it has been
+   consolidated so every step is a multiple of 4px. Shifts were ≤2px per
+   step, so the layout is near-identical. */
 :root {
-  --space-1: 5px;
-  --space-2: 7px;
-  --space-3: 8px;
-  --space-4: 9px;
-  --space-5: 10px;
-  --space-6: 12px;
-  --space-7: 14px;
-  --space-8: 16px;
-  --space-9: 18px;
-  --space-10: 20px;
-  --space-11: 24px;
-  --space-12: 28px;
-  --space-13: 32px;
-  --space-14: 40px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-9: 40px;
 }

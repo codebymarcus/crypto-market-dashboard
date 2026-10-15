@@ -5,8 +5,8 @@
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
-  gap: var(--space-10);
-  margin-bottom: var(--space-11);
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
 }
 
 .searchGroup {
@@ -17,12 +17,12 @@
 .actionsGroup {
   display: flex;
   align-items: flex-end;
-  gap: var(--space-6);
+  gap: var(--space-3);
 }
 
 .sortGroup {
   display: flex;
-  gap: var(--space-6);
+  gap: var(--space-3);
 }
 
 // The sort/order fields are SelectField molecules (own the label+control);
@@ -35,7 +35,7 @@
   .controls {
     align-items: stretch;
     flex-direction: column;
-    gap: var(--space-8);
+    gap: var(--space-4);
   }
 
   .actionsGroup {
