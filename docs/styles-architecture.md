@@ -52,6 +52,7 @@ src/
       _spacing.scss      # --space-1 … --space-14
       _radii.scss        # --radius-xs/sm/md/lg
       _motion.scss       # --duration-* and --ease-*
+      _typography.scss   # --font-size-* (rem) + --font-weight-* + --line-height-*
       _breakpoints.scss  # $bp-* Sass vars (used in @media)
     tools/
       _media.scss        # @mixin from / until
@@ -81,6 +82,7 @@ src/
 @use "styles/settings/spacing";
 @use "styles/settings/radii";
 @use "styles/settings/motion";
+@use "styles/settings/typography";
 @use "styles/generic/reset";
 @use "styles/elements/base";
 ```
@@ -179,6 +181,23 @@ transition:
   background-color var(--duration-fast) var(--ease-default),
   border-color var(--duration-fast) var(--ease-default);
 ```
+
+### Typography (`settings/_typography.scss`)
+
+A consolidated type scale, in **rem** so it scales with the user's root font size.
+Three token families:
+
+| Token family | Values | Notes |
+| --- | --- | --- |
+| `--font-size-*` | `2xs` 0.75 · `xs` 0.8125 · `sm` 0.875 · `base` 1 · `lg` 1.125 · `xl` 1.5 (rem) · `display` / `display-lg` (responsive `clamp`) | sizes |
+| `--font-weight-*` | `regular` 400 · `medium` 500 · `semibold` 600 · `bold` 700 | weights |
+| `--line-height-*` | `tight` 1.2 · `normal` 1.5 · `relaxed` 1.6 | line-heights |
+
+The **`Text` atom** (`components/atoms/Text.tsx`) is the primary consumer: its
+semantic `variant`s (display / title / heading / subtitle / body / small / caption)
+map to these tokens, so components render text through `Text` rather than raw
+`font-*` declarations. Where text stays in SCSS (inside buttons, Recharts, etc.),
+reference the tokens directly.
 
 ### Breakpoints (`settings/_breakpoints.scss`)
 
