@@ -61,7 +61,7 @@ start - no environment variables or secrets to configure.
 ```
 src/
   app/                    # App shell, providers, root component
-  components/ui/          # Shared UI (ErrorState, ThemeToggle)
+  components/             # Shared UI by atomic tier (atoms/molecules/organisms/templates)
   features/coins/         # Coin feature: API, hooks, components, utils, types
   lib/                    # Query client setup
   stores/                 # Zustand preferences store

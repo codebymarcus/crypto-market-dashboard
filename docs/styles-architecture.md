@@ -66,10 +66,11 @@ src/
       _card.scss         # @mixin card-surface
       _grid.scss         # @mixin coin-grid
       _button.scss       # @mixin button-secondary
+      _form-control.scss # @mixin form-control (shared input/select surface)
   index.scss             # global entry: @use of settings + generic + elements
-  app/App.module.scss                        # component layer
-  components/ui/*.module.scss                 # component layer
-  features/coins/components/*.module.scss     # component layer
+  app/App.module.scss                                     # component layer
+  components/{atoms,molecules,organisms,templates}/*.module.scss  # component layer
+  features/coins/components/*.module.scss                 # component layer
 ```
 
 `index.scss` is imported once (via `main.tsx`) and pulls in the global layers:
@@ -485,6 +486,7 @@ at any depth** — never a `../../../styles/` chain:
 
 ```scss
 @use "styles/objects/card" as card;
+@use "styles/objects/form-control" as form-control;
 @use "styles/tools/focus" as focus;
 ```
 
