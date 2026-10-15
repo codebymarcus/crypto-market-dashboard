@@ -26,16 +26,10 @@
   display: flex;
   align-items: center;
   gap: var(--space-8);
+}
 
-  h1 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
-
-  p {
-    margin: 0.25rem 0 0;
-    color: var(--color-text-secondary);
-  }
+.symbol {
+  margin: var(--space-1) 0 0;
 }
 
 .icon {
@@ -45,8 +39,6 @@
 
 .rank {
   margin-left: auto;
-  color: var(--color-text-secondary);
-  font-size: 0.875rem;
 }
 
 .priceSection {
@@ -54,30 +46,14 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-
-  h2 {
-    margin: var(--space-3) 0;
-    font-size: clamp(1.75rem, 5vw, 2.5rem);
-    overflow-wrap: anywhere;
-  }
 }
 
-.label {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: 0.875rem;
-}
-
-.positive {
-  color: var(--color-positive);
-}
-
-.negative {
-  color: var(--color-negative);
-}
-
-.neutral {
-  color: var(--color-text-secondary);
+.priceValue {
+  margin: var(--space-3) 0;
+  font-size: var(--font-size-display-lg);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  overflow-wrap: anywhere;
 }
 
 .stats {
@@ -136,12 +112,4 @@
   justify-content: space-between;
   gap: var(--space-8);
   margin-bottom: var(--space-8);
-
-  h2 {
-    margin: 0;
-  }
-}
-
-.placeholderText {
-  color: var(--color-text-secondary);
 }

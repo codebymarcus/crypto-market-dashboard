@@ -3,6 +3,7 @@ import type { ChartPeriod, Coin } from "../types";
 import { useMarketChart } from "../hooks/use-market-chart";
 import { ChartPeriodSelector } from "./ChartPeriodSelector";
 import { PriceChart } from "./PriceChart";
+import { Text } from "@/components/atoms/Text";
 import { ErrorState } from "@/components/molecules/ErrorState";
 import styles from "./CoinDetailView.module.scss";
 
@@ -34,17 +35,25 @@ export function CoinDetailView({ coin, onBack }: CoinDetailViewProps) {
         <img className={styles.icon} src={coin.image} alt="" />
 
         <div>
-          <h1>{coin.name}</h1>
-          <p>{coin.symbol.toUpperCase()}</p>
+          <Text variant="title" as="h1">
+            {coin.name}
+          </Text>
+          <Text variant="subtitle" tone="secondary" className={styles.symbol}>
+            {coin.symbol.toUpperCase()}
+          </Text>
         </div>
 
-        <span className={styles.rank}>Rank #{coin.market_cap_rank}</span>
+        <Text variant="small" tone="secondary" className={styles.rank}>
+          Rank #{coin.market_cap_rank}
+        </Text>
       </header>
 
       <section className={styles.priceSection}>
-        <p className={styles.label}>Current price</p>
+        <Text variant="small" tone="secondary">
+          Current price
+        </Text>
 
-        <h2>
+        <h2 className={styles.priceValue}>
           {new Intl.NumberFormat("en-US", {
             style: "currency",
             currency: "USD",
@@ -52,24 +61,23 @@ export function CoinDetailView({ coin, onBack }: CoinDetailViewProps) {
           }).format(coin.current_price)}
         </h2>
 
-        <p
-          className={
-            change == null
-              ? styles.neutral
-              : change >= 0
-                ? styles.positive
-                : styles.negative
+        <Text
+          variant="body"
+          tone={
+            change == null ? "secondary" : change >= 0 ? "positive" : "negative"
           }
         >
           {change == null
             ? "24h change unavailable"
             : `${change >= 0 ? "+" : ""}${change.toFixed(2)}% (24h)`}
-        </p>
+        </Text>
       </section>
 
       <section className={styles.stats}>
         <article className={styles.statCard}>
-          <p className={styles.label}>Market cap</p>
+          <Text variant="small" tone="secondary">
+            Market cap
+          </Text>
           <strong>
             {new Intl.NumberFormat("en-US", {
               style: "currency",
@@ -83,7 +91,9 @@ export function CoinDetailView({ coin, onBack }: CoinDetailViewProps) {
 
       <section className={styles.chartSection}>
         <header className={styles.chartHeader}>
-          <h2>Price history</h2>
+          <Text variant="heading" as="h2">
+            Price history
+          </Text>
           <ChartPeriodSelector value={period} onChange={setPeriod} />
         </header>
 
@@ -101,9 +111,9 @@ export function CoinDetailView({ coin, onBack }: CoinDetailViewProps) {
             isRetrying={isChartFetching}
           />
         ) : chart.prices.length === 0 ? (
-          <p className={styles.placeholderText}>
+          <Text variant="body" tone="secondary">
             No price history is available for this period.
-          </p>
+          </Text>
         ) : (
           <PriceChart prices={chart.prices} period={period} />
         )}
