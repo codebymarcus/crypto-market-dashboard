@@ -16,8 +16,8 @@ cascade. For _why_ it's built this way (the decision record), see
 - **Design values are tokens, not literals.** Colour / spacing / radius / motion
   are CSS custom properties; breakpoints are Sass variables.
 - **Shared patterns are Sass mixins** (`card-surface`, `coin-grid`,
-  `button-secondary`, `focus-ring`, `media.from/until`, `reduced-motion`), not
-  copy-pasted rules.
+  `button-secondary`, `focus-ring`, `media.from/until`, `reduced-motion`,
+  `transition`), not copy-pasted rules.
 
 ---
 
@@ -57,6 +57,7 @@ src/
       _media.scss        # @mixin from / until
       _focus.scss        # @mixin focus-ring
       _a11y.scss         # @mixin reduced-motion
+      _transition.scss   # @mixin transition (fast transition + reduced-motion opt-out)
     generic/
       _reset.scss        # box-sizing, html, img reset
     elements/
@@ -287,6 +288,34 @@ the block body (`@content`).
 }
 ```
 
+### `tools/_transition.scss`
+
+The standard component transition - animate a set of properties with the
+`--duration-fast` / `--ease-default` tokens - bundled with its matching
+`reduced-motion` opt-out, so rule 4 can't be forgotten. Pass the properties to
+animate as arguments:
+
+```scss
+@mixin transition($properties...) {
+  // transition: <prop> var(--duration-fast) var(--ease-default), … for each prop
+  // + @media (prefers-reduced-motion: reduce) { transition: none; }
+}
+```
+
+```scss
+@use "styles/tools/transition" as transition;
+
+.toggle {
+  @include transition.transition(background-color, border-color);
+}
+```
+
+Use this for any hover/focus-feedback transition. It does **not** cover the
+`body` theme-crossfade in `elements/_base.scss` - that uses `--duration-theme`
+for a different purpose and stays hand-written. A component that _also_ animates
+something the mixin doesn't drive (e.g. a keyframe `animation`) still writes its
+own extra `reduced-motion` opt-out for that property.
+
 ---
 
 ## Generic & Elements
@@ -421,14 +450,15 @@ focus. Callers add their own **padding / layout / transition**.
 ```
 
 ```scss
-// App.module.scss - with extras
+// CoinControls.module.scss - with extras
+@use "styles/objects/button" as button;
+@use "styles/tools/transition" as transition;
+
 .refreshButton {
   @include button.button-secondary;
   flex-shrink: 0;
   padding: var(--space-5) var(--space-8);
-  transition:
-    background-color var(--duration-fast) var(--ease-default),
-    border-color var(--duration-fast) var(--ease-default);
+  @include transition.transition(background-color, border-color);
 
   &:hover:not(:disabled) {
     border-color: var(--color-text-secondary);
@@ -546,8 +576,8 @@ Add the token to **both** blocks in `settings/_theme.scss` so it switches:
 
 ```scss
 // src/features/alerts/components/AlertBanner.module.scss
-@use "styles/tools/a11y" as a11y;
 @use "styles/tools/focus" as focus;
+@use "styles/tools/transition" as transition;
 
 .banner {
   display: flex;
@@ -557,17 +587,11 @@ Add the token to **both** blocks in `settings/_theme.scss` so it switches:
   border-radius: var(--radius-md);
   background: var(--color-surface);
   color: var(--color-text);
-  transition: background-color var(--duration-fast) var(--ease-default);
+  @include transition.transition(background-color); // + reduced-motion opt-out
 }
 
 .dismiss {
   @include focus.focus-ring;
-}
-
-@include a11y.reduced-motion {
-  .banner {
-    transition: none;
-  }
 }
 ```
 
