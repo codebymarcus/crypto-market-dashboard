@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Text } from "@/components/atoms/Text";
 import { ErrorState } from "@/components/molecules/ErrorState";
 import { ThemeToggle } from "@/components/molecules/ThemeToggle";
 import { PageLayout } from "@/components/templates/PageLayout";
@@ -66,9 +67,14 @@ export function CoinsPage() {
   if (!isSearching && browse.isPending) {
     return (
       <PageLayout {...layoutProps}>
-        <p role="status" className={styles.status}>
+        <Text
+          variant="small"
+          tone="secondary"
+          role="status"
+          className={styles.status}
+        >
           loading cryptocurrency data...
-        </p>
+        </Text>
         <CoinGridSkeleton />
       </PageLayout>
     );
@@ -100,9 +106,14 @@ export function CoinsPage() {
   return (
     <PageLayout {...layoutProps}>
       {active.isError && active.coins.length > 0 && (
-        <p role="status" className={styles.status}>
+        <Text
+          variant="small"
+          tone="secondary"
+          role="status"
+          className={styles.status}
+        >
           Market data could not be refreshed. Showing previously loaded data.
-        </p>
+        </Text>
       )}
 
       <CoinControls
@@ -117,9 +128,15 @@ export function CoinsPage() {
       />
 
       {isSearching && (
-        <p className={styles.resultsCount} role="status" aria-live="polite">
+        <Text
+          variant="small"
+          tone="secondary"
+          role="status"
+          aria-live="polite"
+          className={styles.resultsCount}
+        >
           {active.isFetching ? "Searching…" : `${visibleCoins.length} results`}
-        </p>
+        </Text>
       )}
 
       {active.isPending ? (
