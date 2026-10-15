@@ -1,6 +1,7 @@
 import { useMemo, useState } from "react";
 import { ErrorState } from "@/components/molecules/ErrorState";
 import { ThemeToggle } from "@/components/molecules/ThemeToggle";
+import { PageLayout } from "@/components/templates/PageLayout";
 import { CoinControls } from "./CoinControls";
 import { CoinDetailView } from "./CoinDetailView";
 import { CoinGrid } from "./CoinGrid";
@@ -19,6 +20,8 @@ import styles from "./CoinsPage.module.scss";
 
 const PER_PAGE = 20;
 const SEARCH_DEBOUNCE_MS = 300;
+const PAGE_TITLE = "Crypto Market Dashboard";
+const PAGE_SUBTITLE = "Top cryptocurrencies by market capitalization.";
 
 export function CoinsPage() {
   const [search, setSearch] = useState("");
@@ -54,61 +57,48 @@ export function CoinsPage() {
     setPage(1);
   }
 
-  const header = (
-    <header className={styles.header}>
-      <div>
-        <h1 className={styles.heading}>Crypto Market Dashboard</h1>
-        <p className={styles.subtitle}>
-          Top cryptocurrencies by market capitalization.
-        </p>
-      </div>
-
-      <div className={styles.headerActions}>
-        <ThemeToggle />
-      </div>
-    </header>
-  );
+  const layoutProps = {
+    title: PAGE_TITLE,
+    subtitle: PAGE_SUBTITLE,
+    actions: <ThemeToggle />,
+  };
 
   if (!isSearching && browse.isPending) {
     return (
-      <main className={styles.dashboard}>
-        <h1 className={styles.heading}>Crypto Market Dashboard</h1>
+      <PageLayout {...layoutProps}>
         <p role="status" className={styles.status}>
           loading cryptocurrency data...
         </p>
         <CoinGridSkeleton />
-      </main>
+      </PageLayout>
     );
   }
 
   if (active.isError && active.coins.length === 0) {
     return (
-      <main className={styles.dashboard}>
-        {header}
+      <PageLayout {...layoutProps}>
         <ErrorState
           message={active.error?.message ?? "Something went wrong."}
           onRetry={() => active.refetch()}
           isRetrying={active.isFetching}
         />
-      </main>
+      </PageLayout>
     );
   }
 
   if (selectedCoin) {
     return (
-      <main className={styles.dashboard}>
-        {header}
+      <PageLayout {...layoutProps}>
         <CoinDetailView
           coin={selectedCoin}
           onBack={() => setSelectedCoin(null)}
         />
-      </main>
+      </PageLayout>
     );
   }
 
   return (
-    <main className={styles.dashboard}>
-      {header}
+    <PageLayout {...layoutProps}>
       {active.isError && active.coins.length > 0 && (
         <p role="status" className={styles.status}>
           Market data could not be refreshed. Showing previously loaded data.
@@ -154,6 +144,6 @@ export function CoinsPage() {
           onPageChange={setPage}
         />
       )}
-    </main>
+    </PageLayout>
   );
 }

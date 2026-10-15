@@ -1,47 +1,6 @@
-@use "styles/settings/breakpoints" as bp;
-@use "styles/tools/media" as media;
-
-.headerActions {
-  display: flex;
-  align-items: center;
-  gap: var(--space-5);
-  flex-shrink: 0;
-}
-
-.dashboard {
-  width: min(100% - var(--space-13), 1100px);
-  margin-inline: auto;
-  padding-block: var(--space-14);
-  background: var(--color-background);
-  color: var(--color-text);
-}
-
-.subtitle,
 .status,
 .resultsCount {
   color: var(--color-text-secondary);
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-11);
-  margin-bottom: var(--space-12);
-}
-
-.heading {
-  margin: 0;
-  font-size: clamp(1.5rem, 3vw, 2rem);
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  line-height: 1.2;
-}
-
-.subtitle {
-  margin: var(--space-3) 0 0;
-  font-size: 0.95rem;
-  line-height: 1.5;
 }
 
 .status {
@@ -52,16 +11,4 @@
 .resultsCount {
   margin: 0 0 var(--space-6);
   font-size: 0.85rem;
-}
-
-@include media.until(bp.$bp-toolbar) {
-  .dashboard {
-    padding-block: var(--space-11);
-  }
-
-  .header {
-    // Keep the title block on the left and the icon toggle pinned top-right.
-    align-items: flex-start;
-    gap: var(--space-6);
-  }
 }

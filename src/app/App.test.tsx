@@ -174,6 +174,13 @@ describe("Crypto dashboard", () => {
     expect(
       screen.getByText("loading cryptocurrency data..."),
     ).toBeInTheDocument();
+    // The loading branch now renders the shared page header + theme toggle.
+    expect(
+      screen.getByRole("heading", { name: "Crypto Market Dashboard" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("button", { name: /switch to (dark|light) mode/i }),
+    ).toBeInTheDocument();
   });
 
   it("refreshes market data from the controls row", async () => {
