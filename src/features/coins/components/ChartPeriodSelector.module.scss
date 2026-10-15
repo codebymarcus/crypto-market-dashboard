@@ -16,8 +16,8 @@
   background: transparent;
   color: var(--color-text-secondary);
   font: inherit;
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
 
   @include transition.transition(color, background);

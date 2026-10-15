@@ -19,7 +19,7 @@
   background: var(--color-surface);
   color: var(--color-text);
   font: inherit;
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   cursor: pointer;
 
   @include transition.transition(background, border-color);
@@ -38,5 +38,5 @@
 
 .page {
   color: var(--color-text-secondary);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
 }

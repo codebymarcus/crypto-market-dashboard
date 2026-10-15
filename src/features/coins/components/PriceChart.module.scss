@@ -14,12 +14,12 @@
 .tooltipDate {
   margin: 0 0 var(--space-1);
   color: var(--color-text-secondary);
-  font-size: 0.75rem;
+  font-size: var(--font-size-2xs);
 }
 
 .tooltipValue {
   margin: 0;
   color: var(--color-text);
-  font-weight: 600;
+  font-weight: var(--font-weight-semibold);
   font-variant-numeric: tabular-nums;
 }
