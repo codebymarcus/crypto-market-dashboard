@@ -43,7 +43,16 @@ npm run dev
 
 Open the URL printed in the terminal (default `http://localhost:5173`; Vite
 picks the next free port if 5173 is taken). The app loads market data on
-start - no environment variables or secrets to configure.
+start and works with no configuration against CoinGecko's public API.
+
+### Environment variables (optional)
+
+Both are optional; copy `.env.example` to `.env` to set them.
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `VITE_COINGECKO_BASE_URL` | `https://api.coingecko.com/api/v3` | CoinGecko API base URL. |
+| `VITE_COINGECKO_API_KEY` | _(none)_ | CoinGecko demo API key. When set, it is sent as the `x-cg-demo-api-key` header, which raises the free rate limit. |
 
 ## Available scripts
 
@@ -63,7 +72,7 @@ src/
   app/                    # App shell, providers, root component
   components/             # Shared UI by atomic tier (atoms/molecules/organisms/templates)
   features/coins/         # Coin feature: API, hooks, components, utils, types
-  lib/                    # Query client setup
+  lib/                    # Query client, HTTP client (http/) + client registry
   stores/                 # Zustand preferences store
   styles/                 # Global style layers (settings, tools, generic, elements, objects)
   index.scss              # Global style entry (imports the layers above)
