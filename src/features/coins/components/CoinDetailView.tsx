@@ -54,11 +54,13 @@ export function CoinDetailView({ coin, onBack }: CoinDetailViewProps) {
         </Text>
 
         <h2 className={styles.priceValue}>
-          {new Intl.NumberFormat("en-US", {
-            style: "currency",
-            currency: "USD",
-            maximumFractionDigits: 8,
-          }).format(coin.current_price)}
+          {coin.current_price === null
+            ? "N/A"
+            : new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "USD",
+                maximumFractionDigits: 8,
+              }).format(coin.current_price)}
         </h2>
 
         <Text
@@ -79,12 +81,14 @@ export function CoinDetailView({ coin, onBack }: CoinDetailViewProps) {
             Market cap
           </Text>
           <strong>
-            {new Intl.NumberFormat("en-US", {
-              style: "currency",
-              currency: "USD",
-              notation: "compact",
-              maximumFractionDigits: 2,
-            }).format(coin.market_cap)}
+            {coin.market_cap === null
+              ? "N/A"
+              : new Intl.NumberFormat("en-US", {
+                  style: "currency",
+                  currency: "USD",
+                  notation: "compact",
+                  maximumFractionDigits: 2,
+                }).format(coin.market_cap)}
           </strong>
         </article>
       </section>

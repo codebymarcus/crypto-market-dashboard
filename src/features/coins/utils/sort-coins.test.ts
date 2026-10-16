@@ -63,4 +63,23 @@ describe("sortCoins", () => {
 
     expect(coins.map((coin) => coin.id)).toEqual(originalIds);
   });
+
+  it("sorts coins with a null price last regardless of direction", () => {
+    const withNull: Coin[] = [
+      { ...coins[0], id: "a", current_price: 10 },
+      { ...coins[0], id: "b", current_price: null },
+      { ...coins[0], id: "c", current_price: 30 },
+    ];
+
+    expect(sortCoins(withNull, "price", "desc").map((coin) => coin.id)).toEqual([
+      "c",
+      "a",
+      "b",
+    ]);
+    expect(sortCoins(withNull, "price", "asc").map((coin) => coin.id)).toEqual([
+      "a",
+      "c",
+      "b",
+    ]);
+  });
 });
